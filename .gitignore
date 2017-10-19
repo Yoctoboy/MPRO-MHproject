@@ -1,0 +1,4 @@
+#ignore the content of build path bin
+bin/*
+Win32/*
+mh_exe.dir/*
