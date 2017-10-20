@@ -11,6 +11,7 @@
 #include <queue>
 #include <climits>
 #include "solution.h"
+#include "mhAlea.h"
 
 int main(){
 	int sizz = 5;
@@ -31,6 +32,7 @@ int main(){
 
 	puts(sol.allCover() ? "OK" : "NO");
 	puts(sol.allCommunicate() ? "OK" : "NO");
-
+	mhAlea MH = mhAlea(sizz, 1, 1, 1000);
+	MH.launchMH();
 	return 0;
 }

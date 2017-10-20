@@ -1,7 +1,7 @@
 #include "mhAlea.h"
 
 //Constructor
-mhAlea::mhAlea(int s, int rca, int rco) {
+mhAlea::mhAlea(int s, int rca, int rco, int it) {
 	size = s;
 	Rcap = rca;
 	Rcom = rco;
@@ -9,6 +9,7 @@ mhAlea::mhAlea(int s, int rca, int rco) {
 	bestVal = 0;
 	currSol = solution(s, Rcap, Rcom);
 	currVal = bestVal;
+	iterations = it;
 }
 
 //Get loss of value
@@ -29,7 +30,7 @@ void mhAlea::transf() {
 }
 
 //Launch the meta
-void mhAlea::lauchMH() {
+void mhAlea::launchMH() {
 	for (int k = 0; k < iterations; k++) {
 		transf();
 	}

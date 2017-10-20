@@ -14,10 +14,10 @@ public:
 	int Rcom;
 	int size;
 
-	mhAlea(int, int, int);
+	mhAlea(int, int, int, int);
 	void loss();
 	void transf();
-	void lauchMH();
+	void launchMH();
 };
 
 
