@@ -60,7 +60,6 @@ void solution::updateCover(int R) {
 
 
 //Finding solution using a recursive function
-
 bool solution::realisable(){
 	for(int i = 0; i < cover.size(); i++){
 		for(int j = 0; j < cover.size(); j++){
@@ -70,11 +69,14 @@ bool solution::realisable(){
 	return true;
 }
 
-
+//Controling the path finding and return how many captors are not covered by communication
 int solution::pathfinding(int R) {
 	vector<vector<int> > transf = this->neighbour_transf(R);
+	//Index 2 et 3 are the transformation we cannot make
 	vector<vector<int> > N = { {0,0,0,0} };
+	//get neighbourhood
 	vector<vector<int> > Nf = recursive(N, transf);
+	//get number of captors
 	int nbCapteurs = 0;
 	for (int n = 0; n < size; n++) {
 		for (int j = 0; j < size; j++) {
@@ -84,8 +86,11 @@ int solution::pathfinding(int R) {
 	return nbCapteurs - Nf.size() + 1;
 }
 
+//recursive search
 vector<vector<int> > solution::recursive(vector<vector<int> > N, vector<vector<int> > T) {
+	//initialize new neighbourhood
 	vector<vector<int> > newN;
+	//explore neighbours with transformation
 	for (int n = 0; n < N.size(); n++) {
 		for (int t = 0; t < T.size(); t++) {
 			int X = N[n][0] + T[t][0];

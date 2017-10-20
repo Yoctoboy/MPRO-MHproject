@@ -13,7 +13,7 @@ public:
 
 	solution(int);
 	vector<vector<int> > neighbour_transf(int);
-	solution getNeighbour(vector<int>, int);
+	solution getNeighbour(vector<int>);
 	bool realisable();
 	void updateCover(int);
 	int pathfinding(int);
