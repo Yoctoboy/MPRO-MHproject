@@ -10,10 +10,12 @@
 #include <deque>
 #include <queue>
 #include <climits>
+#include <ctime>
 #include "solution.h"
 #include "mhAlea.h"
 
 int main(){
+	srand(time(NULL));
 	int sizz = 5;
 	solution sol = solution(sizz, 1, 1);
 	/*for (int i = 0; i < sizz; i++) {
