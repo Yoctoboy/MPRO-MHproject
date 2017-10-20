@@ -17,6 +17,9 @@ public:
 	mhAlea(int, int, int, int);
 	void loss();
 	void transf();
+	void transfR();
+	void transfConc();
+	void launchMHremove();
 	void launchMH();
 };
 
