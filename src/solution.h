@@ -18,8 +18,8 @@ public:
 	solution() {};
 	vector< pair<int, int> > neighbour_transf(int);
 	solution getNeighbour(pair<int,int>);
-	bool allcover();
-	bool allcommunicate();
+	bool allCover();
+	bool allCommunicate();
 	void updateCover();
 	int pathfinding();
 	vector<vector<int> > recursive(vector<vector<int> >, vector< pair<int, int> >);
