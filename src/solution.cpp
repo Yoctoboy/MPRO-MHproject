@@ -2,6 +2,9 @@
 #include <algorithm>
 #include <iostream>
 
+#define FOR(i, a, b) for (int i = (a); i < (b); i++)
+#define REP(i, n) FOR(i, 0, n)
+
 //constructor : create the grid nxn with captors everywhere
 solution::solution(int n) {
 	size = n;
@@ -42,15 +45,18 @@ solution solution::getNeighbour(vector<int> pos) {
 void solution::updateCover(int R) {
 	//Get the transformation possible
 	vector<vector<int> > transf = this->neighbour_transf(R);
+	REP(i, transf.size()){
+		printf("%d %d\n", transf[i][0], transf[i][1]);
+	}
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (grid[i][j]) {
 				for (int t = 0; t < transf.size(); t++) {
-					int X = i + transf[i][0];
+					int X = i + transf[t][0];
 					if (X >= 0 && X < size) {
-						int Y = j + transf[i][1];
+						int Y = j + transf[t][1];
 						if (Y >= 0 && Y < size) {
-							cover[X][Y] ++;
+							cover[X][Y]++;
 						}
 					}
 				}

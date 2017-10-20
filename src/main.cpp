@@ -30,7 +30,7 @@ int main(){
 	cout << sol.pathfinding(1) << endl;
 	//system("pause");
 
-	//puts(sol.realisable() ? "OK" : "NO");
+	puts(sol.realisable() ? "OK" : "NO");
 
 	return 0;
 }
