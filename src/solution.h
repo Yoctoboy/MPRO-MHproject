@@ -14,12 +14,12 @@ public:
 	vector<vector<int> > cover;
 
 	solution(int, int, int);
-	vector<vector<int> > neighbour_transf(int);
+	vector< pair<int, int> > neighbour_transf(int);
 	solution getNeighbour(vector<int>);
 	bool realisable();
 	void updateCover();
 	int pathfinding();
-	vector<vector<int> > recursive(vector<vector<int> >, vector<vector<int> >);
+	vector<vector<int> > recursive(vector<vector<int> >, vector< pair<int, int> >);
 };
 
 
