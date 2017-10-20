@@ -5,11 +5,9 @@
 //constructor : create the grid nxn with captors everywhere
 solution::solution(int n) {
 	size = n;
+	vector<bool> intermediate;
 	for (int i = 0; i < n; i++) {
-		vector<bool> intermediate;
-		for (int j = 0; j < n; j++) {
-			intermediate.push_back(true);
-		}
+		intermediate.push_back(true);
 	}
 	grid.clear();
 	for (int i = 0; i < n; i++){
