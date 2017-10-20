@@ -27,5 +27,4 @@ private:
 	vector<vector<bool> > grid;
 };
 
-
 #endif
