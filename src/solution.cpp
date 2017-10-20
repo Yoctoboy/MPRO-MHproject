@@ -1,6 +1,16 @@
 #include "solution.h"
-#include <algorithm>
 #include <iostream>
+#include <stdio.h>
+#include <algorithm>
+#include <vector>
+#include <cstring>
+#include <iostream>
+#include <iomanip>
+#include <math.h>
+#include <map>
+#include <deque>
+#include <queue>
+#include <climits>
 
 #define FOR(i, a, b) for (int i = (a); i < (b); i++)
 #define REP(i, n) FOR(i, 0, n)
@@ -10,6 +20,7 @@ solution::solution(int n, int rcap, int rcom) {
 	size = n;
 	Rcap = rcap;
 	Rcom = rcom;
+	nbCapteurs = (n*n)-1;
 	vector<bool> intermediate;
 	vector<int> intermediate1;
 	for (int i = 0; i < n; i++) {
@@ -73,7 +84,7 @@ void solution::updateCover() {
 
 
 //Finding if sol is realisable (only couverture)
-bool solution::allcover(){
+bool solution::allCover(){
 	this->updateCover();
 	for(int i = 0; i < cover.size(); i++){
 		for(int j = 0; j < cover.size(); j++){
@@ -83,9 +94,39 @@ bool solution::allcover(){
 	return true;
 }
 
-bool solution::allcommunicate(){
+//using BFS, find whether captors can all communicate together
+bool solution::allCommunicate(){
 	queue< pair<int, int> > q;
-	q.push< make_pair(0,0);
+	vector< vector<bool> > marked;
+	vector<bool> markedline;
+	for(int i = 0; i < size; i++){
+		markedline.push_back(false);
+	}
+	for(int i = 0; i < size; i++){
+		marked.push_back(markedline);
+	}
+	q.push(make_pair(0,0));
+	marked[0][0] = true;
+	int found = 0;
+	pair<int, int> current;
+	while(!q.empty()){
+		current = q.front();
+		marked[current.first][current.second] = true;
+		q.pop();
+		for (int i = -Rcom; i <= Rcom; i++) {
+			for (int j = -Rcom; j <= Rcom; j++) {
+				if(i*i + j*j <= Rcom*Rcom) {
+					if((current.first + i >= 0 && current.first + i < size) && (current.second + j >= 0 && current.second + j < size)){
+						if(!marked[current.first+i][current.second+j] && grid[current.first + i][current.second + j]){
+							q.push(make_pair(current.first + i, current.second+j));
+							found++;
+						}
+					}
+				}
+			}
+		}
+	}
+	return found == nbCapteurs;
 }
 
 //Controling the path finding and return how many captors are not covered by communication

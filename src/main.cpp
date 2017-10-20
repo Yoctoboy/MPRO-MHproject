@@ -29,7 +29,8 @@ int main(){
 
 	//cout << sol.pathfinding() << endl;
 
-	puts(sol.realisable() ? "OK" : "NO");
+	puts(sol.allCover() ? "OK" : "NO");
+	puts(sol.allCommunicate() ? "OK" : "NO");
 
 	return 0;
 }
