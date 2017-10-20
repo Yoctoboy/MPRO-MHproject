@@ -71,8 +71,9 @@ void solution::updateCover() {
 }
 
 
+
 //Finding if sol is realisable (only couverture)
-bool solution::realisable(){
+bool solution::allcover(){
 	this->updateCover();
 	for(int i = 0; i < cover.size(); i++){
 		for(int j = 0; j < cover.size(); j++){
@@ -80,6 +81,11 @@ bool solution::realisable(){
 		}
 	}
 	return true;
+}
+
+bool solution::allcommunicate(){
+	queue< pair<int, int> > q;
+	q.push< make_pair(0,0);
 }
 
 //Controling the path finding and return how many captors are not covered by communication

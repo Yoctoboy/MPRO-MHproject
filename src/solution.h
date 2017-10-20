@@ -16,7 +16,8 @@ public:
 	solution(int, int, int);
 	vector< pair<int, int> > neighbour_transf(int);
 	solution getNeighbour(vector<int>);
-	bool realisable();
+	bool allcover();
+	bool allcommunicate();
 	void updateCover();
 	int pathfinding();
 	vector<vector<int> > recursive(vector<vector<int> >, vector< pair<int, int> >);
