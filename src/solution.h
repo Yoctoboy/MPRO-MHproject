@@ -11,6 +11,7 @@ public:
 	int size;
 	int Rcap;
 	int Rcom;
+	int nbCapteurs;
 	vector<vector<int> > cover;
 
 	solution(int, int, int);
