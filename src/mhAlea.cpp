@@ -1,5 +1,6 @@
 #include "mhAlea.h"
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ mhAlea::mhAlea(int s, int rca, int rco, int it) {
 	Rcap = rca;
 	Rcom = rco;
 	bestSol = solution(s, Rcap, Rcom);
-	bestVal = bestSol.getCapt() + 
+	bestVal = bestSol.getCapt() +
 		pow(size,2) * (bestSol.allCover() + bestSol.allCommunicate() + bestSol.evalCover() + bestSol.evalPath());
 	currSol = solution(s, Rcap, Rcom);
 	currVal = bestVal;
@@ -18,7 +19,7 @@ mhAlea::mhAlea(int s, int rca, int rco, int it) {
 
 //Get loss of value
 void mhAlea::loss() {
-	currVal = currSol.getCapt() + 
+	currVal = currSol.getCapt() +
 		pow(size,2) * (currSol.allCover() + currSol.allCommunicate() + currSol.evalCover() + currSol.evalPath());
 }
 
