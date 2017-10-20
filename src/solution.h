@@ -22,8 +22,6 @@ public:
 	void addCaptor(pair<int,int>);
 	void removeCaptor(pair<int,int>);
 	void updateCover();
-	int pathfinding();
-	vector<vector<int> > recursive(vector<vector<int> >, vector< pair<int, int> >);
 
 private:
 	vector<vector<bool> > grid;
