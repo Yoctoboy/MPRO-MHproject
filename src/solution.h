@@ -11,12 +11,14 @@ public:
 	int size;
 	int Rcap;
 	int Rcom;
+	int nbCapteurs;
 	vector<vector<int> > cover;
 
 	solution(int, int, int);
 	vector< pair<int, int> > neighbour_transf(int);
 	solution getNeighbour(vector<int>);
-	bool realisable();
+	bool allcover();
+	bool allcommunicate();
 	void updateCover();
 	int pathfinding();
 	vector<vector<int> > recursive(vector<vector<int> >, vector< pair<int, int> >);
