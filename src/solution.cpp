@@ -261,3 +261,12 @@ int solution::evalPath() {
 	}
 	return vmoy/(size*size);
 }
+
+void solution::printgrid(){
+	for (int i = 0; i < size; i++){
+		for (int j = 0; j < size; j++){
+			printf("%c", grid[i][j] ? '#' : '.');
+		}
+		puts("");
+	}
+}
