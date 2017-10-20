@@ -1,5 +1,7 @@
 #include "mhAlea.h"
 
+using namespace std;
+
 //Constructor
 mhAlea::mhAlea(int s, int rca, int rco, int it) {
 	size = s;
@@ -19,8 +21,8 @@ void mhAlea::loss() {
 
 //Unitary transformation
 void mhAlea::transf() {
-	int i0 = std::rand() % size;
-	int j0 = std::rand() % size;
+	int i0 = rand() % size;
+	int j0 = rand() % size;
 	currSol = currSol.getNeighbour({ i0,j0 });
 	loss();
 	if (currVal < bestVal) {
