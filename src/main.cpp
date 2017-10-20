@@ -27,9 +27,9 @@ int main(){
 	sol.grid[3][1] = true;
 	sol.grid[1][3] = true;*/
 
-	cout << sol.pathfinding() << endl;
+	//cout << sol.pathfinding() << endl;
 
-	puts(sol.realisable() ? "OK" : "NO");
+	puts(sol.allcover() ? "OK" : "NO");
 
 	return 0;
 }

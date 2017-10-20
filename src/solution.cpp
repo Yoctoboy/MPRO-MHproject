@@ -1,6 +1,7 @@
 #include "solution.h"
 #include <algorithm>
 #include <iostream>
+#include <queue>
 
 #define FOR(i, a, b) for (int i = (a); i < (b); i++)
 #define REP(i, n) FOR(i, 0, n)
@@ -85,7 +86,8 @@ bool solution::allcover(){
 
 bool solution::allcommunicate(){
 	queue< pair<int, int> > q;
-	q.push< make_pair(0,0);
+	q.push(make_pair(0,0));
+	return true;
 }
 
 //Controling the path finding and return how many captors are not covered by communication

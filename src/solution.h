@@ -15,6 +15,7 @@ public:
 	vector<vector<int> > cover;
 
 	solution(int, int, int);
+	solution() {};
 	vector< pair<int, int> > neighbour_transf(int);
 	solution getNeighbour(vector<int>);
 	bool allcover();
