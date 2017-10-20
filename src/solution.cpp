@@ -9,12 +9,15 @@
 solution::solution(int n) {
 	size = n;
 	vector<bool> intermediate;
+	vector<int> intermediate1;
 	for (int i = 0; i < n; i++) {
 		intermediate.push_back(true);
+		intermediate1.push_back(0);
 	}
 	grid.clear();
 	for (int i = 0; i < n; i++){
 		grid.push_back(intermediate);
+		cover.push_back(intermediate1);
 	}
 }
 
