@@ -15,7 +15,7 @@
 int main(){
 	int sizz = 5;
 	solution sol = solution(sizz);
-	for (int i = 0; i < sizz; i++) {
+	/*for (int i = 0; i < sizz; i++) {
 		for (int j = 0; j < sizz; j++) {
 			sol.grid[i][j] = false;
 		}
@@ -25,7 +25,7 @@ int main(){
 	sol.grid[2][1] = true;
 	sol.grid[1][2] = true;
 	sol.grid[3][1] = true;
-	sol.grid[1][3] = true;
+	sol.grid[1][3] = true;*/
 
 	cout << sol.pathfinding(1) << endl;
 

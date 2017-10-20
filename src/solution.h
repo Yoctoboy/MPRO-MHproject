@@ -9,14 +9,16 @@ class solution {
 public:
 	vector<vector<bool> > grid;
 	int size;
+	int Rcap;
+	int Rcom;
 	vector<vector<int> > cover;
 
-	solution(int);
+	solution(int, int, int);
 	vector<vector<int> > neighbour_transf(int);
 	solution getNeighbour(vector<int>);
 	bool realisable();
-	void updateCover(int);
-	int pathfinding(int);
+	void updateCover();
+	int pathfinding();
 	vector<vector<int> > recursive(vector<vector<int> >, vector<vector<int> >);
 };
 

@@ -6,8 +6,10 @@
 #define REP(i, n) FOR(i, 0, n)
 
 //constructor : create the grid nxn with captors everywhere
-solution::solution(int n) {
+solution::solution(int n, int rcap, int rcom) {
 	size = n;
+	Rcap = rcap;
+	Rcom = rcom;
 	vector<bool> intermediate;
 	vector<int> intermediate1;
 	for (int i = 0; i < n; i++) {
@@ -45,9 +47,9 @@ solution solution::getNeighbour(vector<int> pos) {
 }
 
 //Calculate the cover
-void solution::updateCover(int R) {
+void solution::updateCover() {
 	//Get the transformation possible
-	vector<vector<int> > transf = this->neighbour_transf(R);
+	vector<vector<int> > transf = this->neighbour_transf(Rcap);
 	REP(i, transf.size()){
 		printf("%d %d\n", transf[i][0], transf[i][1]);
 	}
@@ -81,8 +83,8 @@ bool solution::realisable(){
 }
 
 //Controling the path finding and return how many captors are not covered by communication
-int solution::pathfinding(int R) {
-	vector<vector<int> > transf = this->neighbour_transf(R);
+int solution::pathfinding() {
+	vector<vector<int> > transf = this->neighbour_transf(Rcom);
 	//Index 2 et 3 are the transformation we cannot make
 	vector<vector<int> > N = { {0,0,0,0} };
 	//get neighbourhood
