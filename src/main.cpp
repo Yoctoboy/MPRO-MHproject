@@ -28,9 +28,9 @@ int main(){
 	sol.grid[1][3] = true;
 
 	cout << sol.pathfinding(1) << endl;
-	//system("pause");
 
-	//puts(sol.realisable() ? "OK" : "NO");
+	puts(sol.realisable() ? "OK" : "NO");
+	//system("pause");
 
 	return 0;
 }

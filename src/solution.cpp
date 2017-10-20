@@ -46,9 +46,9 @@ void solution::updateCover(int R) {
 		for (int j = 0; j < size; j++) {
 			if (grid[i][j]) {
 				for (int t = 0; t < transf.size(); t++) {
-					int X = i + transf[i][0];
+					int X = i + transf[t][0];
 					if (X >= 0 && X < size) {
-						int Y = j + transf[i][1];
+						int Y = j + transf[t][1];
 						if (Y >= 0 && Y < size) {
 							cover[X][Y] ++;
 						}
