@@ -43,6 +43,12 @@ solution solution::getNeighbour(vector<int> pos) {
 	solution sol = *this;
 	if (pos[0] >= 0 && pos[0] < size && pos[1] >= 0 && pos[1] < size) {
 		sol.grid[pos[0]][pos[1]] = !this->grid[pos[0]][pos[1]];
+		if (sol.grid[pos[0]][pos[1]]) {
+			nbCapteurs++;
+		}
+		else {
+			nbCapteurs--;
+		}
 	}
 	return sol;
 }
