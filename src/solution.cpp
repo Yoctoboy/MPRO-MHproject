@@ -38,16 +38,16 @@ vector< pair<int, int> > solution::neighbour_transf(int R) {
 }
 
 //return the neighbour at position pos
-solution solution::getNeighbour(vector<int> pos) {
+solution solution::getNeighbour(pair<int, int> pos) {
 	//copy the current solution
 	solution sol = *this;
-	if (pos[0] >= 0 && pos[0] < size && pos[1] >= 0 && pos[1] < size) {
-		sol.grid[pos[0]][pos[1]] = !this->grid[pos[0]][pos[1]];
-		if (sol.grid[pos[0]][pos[1]]) {
-			nbCapteurs++;
+	if (pos.first >= 0 && pos.first < size && pos.second >= 0 && pos.second < size) {
+		sol.grid[pos.first][pos.second] = !this->grid[pos.first][pos.second];
+		if (sol.grid[pos.first][pos.second]) {
+			sol.nbCapteurs++;
 		}
 		else {
-			nbCapteurs--;
+			sol.nbCapteurs--;
 		}
 	}
 	return sol;
