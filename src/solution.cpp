@@ -24,12 +24,12 @@ solution::solution(int n, int rcap, int rcom) {
 }
 
 //calculates all possible transformation given a radius R
-vector<vector<int> > solution::neighbour_transf(int R) {
-	vector<vector<int> > transf;
+vector< pair<int, int> > solution::neighbour_transf(int R) {
+	vector< pair<int, int> > transf;
 	for (int i = -R; i <= R; i++) {
 		for (int j = -R; j <= R; j++) {
 			if (i*i + j*j <= R*R) {
-				transf.push_back({ i,j });
+				transf.push_back(make_pair(i, j));
 			}
 		}
 	}
@@ -49,17 +49,17 @@ solution solution::getNeighbour(vector<int> pos) {
 //Calculate the cover
 void solution::updateCover() {
 	//Get the transformation possible
-	vector<vector<int> > transf = this->neighbour_transf(Rcap);
+	vector< pair<int, int> > transf = this->neighbour_transf(Rcap);
 	REP(i, transf.size()){
-		printf("%d %d\n", transf[i][0], transf[i][1]);
+		printf("%d %d\n", transf[i].first, transf[i].second);
 	}
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (grid[i][j]) {
 				for (int t = 0; t < transf.size(); t++) {
-					int X = i + transf[t][0];
+					int X = i + transf[t].first;
 					if (X >= 0 && X < size) {
-						int Y = j + transf[t][1];
+						int Y = j + transf[t].second;
 						if (Y >= 0 && Y < size) {
 							cover[X][Y]++;
 						}
@@ -71,7 +71,7 @@ void solution::updateCover() {
 }
 
 
-//Finding if sol is realisable
+//Finding if sol is realisable (only couverture)
 bool solution::realisable(){
 	this->updateCover();
 	for(int i = 0; i < cover.size(); i++){
@@ -84,7 +84,7 @@ bool solution::realisable(){
 
 //Controling the path finding and return how many captors are not covered by communication
 int solution::pathfinding() {
-	vector<vector<int> > transf = this->neighbour_transf(Rcom);
+	vector< pair<int, int> > transf = this->neighbour_transf(Rcom);
 	//Index 2 et 3 are the transformation we cannot make
 	vector<vector<int> > N = { {0,0,0,0} };
 	//get neighbourhood
@@ -99,20 +99,22 @@ int solution::pathfinding() {
 	return nbCapteurs - Nf.size() + 1;
 }
 
+
+
 //recursive search
-vector<vector<int> > solution::recursive(vector<vector<int> > N, vector<vector<int> > T) {
+vector<vector<int> > solution::recursive(vector<vector<int> > N, vector< pair<int, int> > T) {
 	//initialize new neighbourhood
 	vector<vector<int> > newN;
 	//explore neighbours with transformations
 	for (int n = 0; n < N.size(); n++) {
 		for (int t = 0; t < T.size(); t++) {
-			int X = N[n][0] + T[t][0];
-			int Y = N[n][1] + T[t][1];
+			int X = N[n][0] + T[t].first;
+			int Y = N[n][1] + T[t].second;
 			if (X >= 0 && X < size) {
 				if (Y >= 0 && Y < size) {
 					//if there is a captor and the transformation is allowed add new neighbour
-					if (grid[X][Y] && !(N[n][2] == T[t][0] && N[n][3] == T[t][1])) {
-						newN.push_back({ X,Y, -T[t][0], -T[t][1] });
+					if (grid[X][Y] && !(N[n][2] == T[t].first && N[n][3] == T[t].second)) {
+						newN.push_back({ X,Y, -T[t].first -T[t].second });
 					}
 				}
 			}

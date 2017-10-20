@@ -31,7 +31,5 @@ int main(){
 
 	puts(sol.realisable() ? "OK" : "NO");
 
-	//system("pause");
-
 	return 0;
 }
