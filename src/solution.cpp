@@ -59,7 +59,7 @@ void solution::updateCover(int R) {
 }
 
 
-//Finding solution using a recursive function
+//Finding if sol is realisable
 bool solution::realisable(){
 	for(int i = 0; i < cover.size(); i++){
 		for(int j = 0; j < cover.size(); j++){
@@ -122,7 +122,7 @@ vector<vector<int> > solution::recursive(vector<vector<int> > N, vector<vector<i
 	if (nnewN.size() == 0) {
 		return N;
 	}
-	//else we find new neighbours recursively and give back N + result of recursive
+	//else we find new neighbours recursively and give back N + result of recursive in new neighbourhood
 	else {
 		vector<vector<int> > NN = recursive(nnewN, T);
 		N.insert(N.end(), NN.begin(), NN.end());

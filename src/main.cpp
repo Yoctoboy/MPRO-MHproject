@@ -15,6 +15,6 @@ int main(){
 	sol.grid[3][1] = true;
 	sol.grid[1][3] = true;
 	cout << sol.pathfinding(1) << endl;
-	system("pause");
+	//system("pause");
 	return 0;
 }
