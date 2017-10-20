@@ -88,8 +88,6 @@ void solution::updateCover() {
 	}
 }
 
-
-
 //Finding if sol is realisable (only couverture)
 bool solution::allCover(){
 	this->updateCover();
@@ -101,23 +99,10 @@ bool solution::allCover(){
 	return true;
 }
 
-void solution::addCaptor(pair<int, int> pos){
-	if(!grid[pos.first][pos.second]){
-		grid[pos.first][pos.second] = true;
-		nbCapteurs++;
-	}
-}
-
-void solution::removeCaptor(pair<int, int> pos){
-	if(grid[pos.first][pos.second]){
-		grid[pos.first][pos.second] = false;
-		nbCapteurs--;
-	}
-}
-
 //using BFS, find whether captors can all communicate together
 bool solution::allCommunicate(){
 	queue< pair<int, int> > q;
+	pair<int, int> current;
 	vector< vector<bool> > marked;
 	vector<bool> markedline;
 	for(int i = 0; i < size; i++){
@@ -126,13 +111,13 @@ bool solution::allCommunicate(){
 	for(int i = 0; i < size; i++){
 		marked.push_back(markedline);
 	}
+
 	q.push(make_pair(0,0));
 	marked[0][0] = true;
 	int found = 0;
-	pair<int, int> current;
+
 	while(!q.empty()){
 		current = q.front();
-		marked[current.first][current.second] = true;
 		q.pop();
 		for (int i = -Rcom; i <= Rcom; i++) {
 			for (int j = -Rcom; j <= Rcom; j++) {
@@ -141,6 +126,7 @@ bool solution::allCommunicate(){
 						if(!marked[current.first+i][current.second+j] && grid[current.first + i][current.second + j]){
 							q.push(make_pair(current.first + i, current.second+j));
 							found++;
+							marked[current.first+i][current.second+j] = true;
 						}
 					}
 				}
@@ -148,4 +134,23 @@ bool solution::allCommunicate(){
 		}
 	}
 	return found == nbCapteurs;
+}
+
+
+void solution::addCaptor(pair<int, int> pos){
+	if(!grid[pos.first][pos.second]){
+		grid[pos.first][pos.second] = true;
+		nbCapteurs++;
+		return true;
+	}
+	else return false;
+}
+
+void solution::removeCaptor(pair<int, int> pos){
+	if(grid[pos.first][pos.second]){
+		grid[pos.first][pos.second] = false;
+		nbCapteurs--;
+		return true;
+	}
+	else return false;
 }
