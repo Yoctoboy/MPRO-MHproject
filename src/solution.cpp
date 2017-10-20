@@ -101,6 +101,20 @@ bool solution::allCover(){
 	return true;
 }
 
+void addCaptor(pair<int, int> pos){
+	if(!grid[pos.first][pos.second]){
+		grid[pos.first][pos.second] = true;
+		nbCapteurs++;
+	}
+}
+
+void removeCaptor(pair<int, int> pos){
+	if(grid[pos.first][pos.second]){
+		grid[pos.first][pos.second] = false;
+		nbCapteurs--;
+	}
+}
+
 //using BFS, find whether captors can all communicate together
 bool solution::allCommunicate(){
 	queue< pair<int, int> > q;
