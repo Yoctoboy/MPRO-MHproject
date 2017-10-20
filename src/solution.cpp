@@ -32,7 +32,10 @@ solution::solution(int n, int rcap, int rcom) {
 	for (int i = 0; i < n; i++){
 		grid.push_back(intermediate);
 		cover.push_back(intermediate1);
+		com.push_back(intermediate1);
 	}
+	transf_capt = neighbour_transf(Rcap);
+	transf_com = neighbour_transf(Rcom);
 }
 
 //calculates all possible transformation given a radius R
@@ -49,37 +52,51 @@ vector< pair<int, int> > solution::neighbour_transf(int R) {
 }
 
 //return the neighbour at position pos
-solution solution::getNeighbour(pair<int, int> pos) {
-	//copy the current solution
-	solution sol = *this;
-	if (pos.first >= 0 && pos.first < size && pos.second >= 0 && pos.second < size) {
-		sol.grid[pos.first][pos.second] = !this->grid[pos.first][pos.second];
-		if (sol.grid[pos.first][pos.second]) {
-			sol.nbCapteurs++;
-		}
-		else {
-			sol.nbCapteurs--;
-		}
+void solution::getNeighbour(pair<int, int> pos) {
+	int R = removeCaptor(pos);
+	if (R == -1) {
+		addCaptor(pos);
 	}
-	return sol;
 }
 
 //Calculate the cover
 void solution::updateCover() {
 	//Get the transformation possible
-	vector< pair<int, int> > transf = this->neighbour_transf(Rcap);
-	REP(i, transf.size()){
-		printf("%d %d\n", transf[i].first, transf[i].second);
+	REP(i, transf_capt.size()){
+		//printf("%d %d\n", transf[i].first, transf[i].second);
 	}
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (grid[i][j]) {
-				for (int t = 0; t < transf.size(); t++) {
-					int X = i + transf[t].first;
+				for (int t = 0; t < transf_capt.size(); t++) {
+					int X = i + transf_capt[t].first;
 					if (X >= 0 && X < size) {
-						int Y = j + transf[t].second;
+						int Y = j + transf_capt[t].second;
 						if (Y >= 0 && Y < size) {
 							cover[X][Y]++;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+//Calculate the cover
+void solution::updateCom() {
+	//Get the transformation possible
+	REP(i, transf_com.size()) {
+		//printf("%d %d\n", transf[i].first, transf[i].second);
+	}
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (grid[i][j]) {
+				for (int t = 0; t < transf_capt.size(); t++) {
+					int X = i + transf_capt[t].first;
+					if (X >= 0 && X < size) {
+						int Y = j + transf_capt[t].second;
+						if (Y >= 0 && Y < size && !(X == i && Y == j)) {
+							com[X][Y]++;
 						}
 					}
 				}
@@ -137,20 +154,110 @@ bool solution::allCommunicate(){
 }
 
 
-void solution::addCaptor(pair<int, int> pos){
+bool solution::addCaptor(pair<int, int> pos){
 	if(!grid[pos.first][pos.second]){
 		grid[pos.first][pos.second] = true;
 		nbCapteurs++;
+		for (int t = 0; t < transf_capt.size(); t++){
+			int X = pos.first + transf_capt[t].first;
+			int Y = pos.second + transf_capt[t].second;
+			if (X >= 0 && X < size && Y >= 0 && Y < size) {
+				cover[X][Y] ++;
+			}
+		}
+		for (int t = 0; t < transf_com.size(); t++) {
+			int X = pos.first + transf_com[t].first;
+			int Y = pos.second + transf_com[t].second;
+			if (X >= 0 && X < size && Y >= 0 && Y < size && !(X == pos.first && Y == pos.second)) {
+				com[X][Y] ++;
+			}
+		}
 		return true;
 	}
 	else return false;
 }
 
-void solution::removeCaptor(pair<int, int> pos){
+bool solution::removeCaptor(pair<int, int> pos){
 	if(grid[pos.first][pos.second]){
 		grid[pos.first][pos.second] = false;
 		nbCapteurs--;
+		for (int t = 0; t < transf_capt.size(); t++) {
+			int X = pos.first + transf_capt[t].first;
+			int Y = pos.second + transf_capt[t].second;
+			if (X >= 0 && X < size && Y >= 0 && Y < size) {
+				cover[X][Y] --;
+			}
+		}
+		for (int t = 0; t < transf_com.size(); t++) {
+			int X = pos.first + transf_com[t].first;
+			int Y = pos.second + transf_com[t].second;
+			if (X >= 0 && X < size && Y >= 0 && Y < size && !(X==pos.first && Y==pos.second)) {
+				com[X][Y] --;
+			}
+		}
 		return true;
 	}
 	else return false;
+}
+
+//Unitary transformation
+void solution::transf1() {
+	int i0 = rand() % size;
+	int j0 = rand() % size;
+	this->getNeighbour({ i0,j0 });
+}
+
+//Unitary transformation
+void solution::remove1() {
+	int i0 = rand() % size;
+	int j0 = rand() % size;
+	this->removeCaptor({ i0,j0 });
+}
+
+//Unitary transformation with concentration
+void solution::transfConc1() {
+	int i0 = 0;
+	int j0 = 0;
+	for (int k = 0; k < size; k++) {
+		int i = rand() % size;
+		int j = rand() % size;
+		if (cover[i][j] >= cover[i0][j0]) {
+			i0 = i;
+			j0 = j;
+		}
+	}
+
+	this->getNeighbour({ i0,j0 });
+}
+
+//Evaluate quality of cover
+int solution::evalCover() {
+	float vmoy = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			vmoy += cover[i][j];
+		}
+	}
+	vmoy *= 1 / (size*size);
+	float vvar = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			vvar += pow(cover[i][j] - vmoy, 2);
+		}
+	}
+	vvar *= 1 / (size*size);
+	return vvar;
+}
+
+//Evaluate quality of cover
+int solution::evalPath() {
+	float vmoy = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (grid[i][j]) {
+				vmoy += com[i][j];
+			}
+		}
+	}
+	return vmoy/(size*size);
 }

@@ -1,4 +1,5 @@
 #include "mhAlea.h"
+#include <iostream>
 
 using namespace std;
 
@@ -8,7 +9,8 @@ mhAlea::mhAlea(int s, int rca, int rco, int it) {
 	Rcap = rca;
 	Rcom = rco;
 	bestSol = solution(s, Rcap, Rcom);
-	bestVal = 0;
+	bestVal = bestSol.getCapt() + 
+		pow(size,2) * (bestSol.allCover() + bestSol.allCommunicate() + bestSol.evalCover() + bestSol.evalPath());
 	currSol = solution(s, Rcap, Rcom);
 	currVal = bestVal;
 	iterations = it;
@@ -16,56 +18,48 @@ mhAlea::mhAlea(int s, int rca, int rco, int it) {
 
 //Get loss of value
 void mhAlea::loss() {
-	currVal = currSol.nbCapteurs + size^2 * currSol.allCover() + size^2 * currSol.allCommunicate();
-}
-
-//Unitary transformation
-void mhAlea::transf() {
-	int i0 = rand() % size;
-	int j0 = rand() % size;
-	currSol = currSol.getNeighbour({ i0,j0 });
-	loss();
-	if (currVal < bestVal) {
-		bestVal = currVal;
-		bestSol = currSol;
-	}
-}
-
-//unitary removal transformation
-void mhAlea::transfR() {
-	int i0 = rand() % size;
-	int j0 = rand() % size;
-	currSol.removeCaptor({ i0,j0 });
-	loss();
-	if (currVal < bestVal) {
-		bestVal = currVal;
-		bestSol = currSol;
-	}
-}
-
-//unitary transformation with random in high concentration cover regions
-void mhAlea::transfConc() {
-	int imax = 0;
-	int jmax = 0;
-	for (int k = 0; k < size; k++) {
-		int i = rand() % size;
-		int j = rand() % size;
-		if (currSol.cover[i][j]) {
-
-		}
-	}
+	currVal = currSol.getCapt() + 
+		pow(size,2) * (currSol.allCover() + currSol.allCommunicate() + currSol.evalCover() + currSol.evalPath());
 }
 
 //Launch the meta
 void mhAlea::launchMH() {
+	std::cout << "initial best value " << bestVal << " " << bestSol.getCapt() << std::endl;
 	for (int k = 0; k < iterations; k++) {
-		transf();
+		currSol.transf1();
+		loss();
+		if (currVal < bestVal) {
+			bestVal = currVal;
+			bestSol = currSol;
+		}
 	}
+	std::cout << "final best value " << bestVal << " " << bestSol.getCapt() << std::endl;
 }
 
 //Launch the meta
 void mhAlea::launchMHremove() {
+	std::cout << "initial best value " << bestVal << " " << bestSol.getCapt() << std::endl;
 	for (int k = 0; k < iterations; k++) {
-		transfR();
+		currSol.remove1();
+		loss();
+		if (currVal < bestVal) {
+			bestVal = currVal;
+			bestSol = currSol;
+		}
 	}
+	std::cout << "final best value " << bestVal << " " << bestSol.getCapt() << std::endl;
+}
+
+//Launch the meta
+void mhAlea::launchMHconc() {
+	std::cout << "initial best value " << bestVal << " " << bestSol.getCapt() << std::endl;
+	for (int k = 0; k < iterations; k++) {
+		currSol.transfConc1();
+		loss();
+		if (currVal < bestVal) {
+			bestVal = currVal;
+			bestSol = currSol;
+		}
+	}
+	std::cout << "final best value " << bestVal << " " << bestSol.getCapt() << std::endl;
 }

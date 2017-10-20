@@ -16,7 +16,7 @@
 
 int main(){
 	srand(time(NULL));
-	int sizz = 5;
+	int sizz = 15;
 	solution sol = solution(sizz, 1, 1);
 	/*for (int i = 0; i < sizz; i++) {
 		for (int j = 0; j < sizz; j++) {
@@ -36,5 +36,10 @@ int main(){
 	puts(sol.allCommunicate() ? "OK" : "NO");
 	mhAlea MH = mhAlea(sizz, 1, 1, 1000);
 	MH.launchMH();
+	mhAlea MH2 = mhAlea(sizz, 1, 1, 1000);
+	MH2.launchMHremove();
+	mhAlea MH3 = mhAlea(sizz, 1, 1, 1000);
+	MH3.launchMHconc();
+	system("pause");
 	return 0;
 }
