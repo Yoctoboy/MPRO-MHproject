@@ -10,6 +10,9 @@ solution::solution(int n) {
 		for (int j = 0; j < n; j++) {
 			intermediate.push_back(true);
 		}
+	}
+	grid.clear();
+	for (int i = 0; i < n; i++){
 		grid.push_back(intermediate);
 	}
 }
@@ -61,6 +64,7 @@ void solution::updateCover(int R) {
 
 //Finding if sol is realisable
 bool solution::realisable(){
+	this->updateCover(1);
 	for(int i = 0; i < cover.size(); i++){
 		for(int j = 0; j < cover.size(); j++){
 			if(cover[i][j] < 1) return false;

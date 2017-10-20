@@ -1,10 +1,22 @@
 #include <iostream>
+#include <stdio.h>
+#include <algorithm>
+#include <vector>
+#include <cstring>
+#include <iostream>
+#include <iomanip>
+#include <math.h>
+#include <map>
+#include <deque>
+#include <queue>
+#include <climits>
 #include "solution.h"
 
 int main(){
-	solution sol = solution(10);
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
+	int sizz = 5;
+	solution sol = solution(sizz);
+	for (int i = 0; i < sizz; i++) {
+		for (int j = 0; j < sizz; j++) {
 			sol.grid[i][j] = false;
 		}
 	}
@@ -14,7 +26,11 @@ int main(){
 	sol.grid[1][2] = true;
 	sol.grid[3][1] = true;
 	sol.grid[1][3] = true;
+
 	cout << sol.pathfinding(1) << endl;
 	//system("pause");
+
+	//puts(sol.realisable() ? "OK" : "NO");
+
 	return 0;
 }
