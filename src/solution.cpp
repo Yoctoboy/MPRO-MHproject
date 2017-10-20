@@ -58,7 +58,19 @@ void solution::updateCover(int R) {
 	}
 }
 
+
 //Finding solution using a recursive function
+
+bool solution::realisable(){
+	for(int i = 0; i < cover.size(); i++){
+		for(int j = 0; j < cover.size(); j++){
+			if(cover[i][j] < 1) return false;
+		}
+	}
+	return true;
+}
+
+
 int solution::pathfinding(int R) {
 	vector<vector<int> > transf = this->neighbour_transf(R);
 	vector<vector<int> > N = { {0,0,0,0} };
