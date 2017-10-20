@@ -101,7 +101,6 @@ bool solution::allCover(){
 //using BFS, find whether captors can all communicate together
 bool solution::allCommunicate(){
 	queue< pair<int, int> > q;
-<<<<<<< HEAD
 	vector< vector<bool> > marked;
 	vector<bool> markedline;
 	for(int i = 0; i < size; i++){
@@ -132,10 +131,6 @@ bool solution::allCommunicate(){
 		}
 	}
 	return found == nbCapteurs;
-=======
-	q.push(make_pair(0,0));
-	return true;
->>>>>>> 415e36be89f956429a1ea2ef0eec31944d4f8795
 }
 
 //Controling the path finding and return how many captors are not covered by communication
