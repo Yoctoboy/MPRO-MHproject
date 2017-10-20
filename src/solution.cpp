@@ -43,12 +43,14 @@ void solution::updateCover(int R) {
 	vector<vector<int> > transf = this->neighbour_transf(R);
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			for (int t = 0; t < transf.size(); t++) {
-				int X = i + transf[i][0];
-				if (X >= 0 && X < size) {
-					int Y = j + transf[i][1];
-					if (Y >= 0 && Y < size) {
-						cover[X][Y] ++;
+			if (grid[i][j]) {
+				for (int t = 0; t < transf.size(); t++) {
+					int X = i + transf[i][0];
+					if (X >= 0 && X < size) {
+						int Y = j + transf[i][1];
+						if (Y >= 0 && Y < size) {
+							cover[X][Y] ++;
+						}
 					}
 				}
 			}
@@ -56,6 +58,7 @@ void solution::updateCover(int R) {
 	}
 }
 
+//Finding solution using a recursive function
 int solution::pathfinding(int R) {
 	vector<vector<int> > transf = this->neighbour_transf(R);
 	vector<vector<int> > N = { {0,0,0,0} };
