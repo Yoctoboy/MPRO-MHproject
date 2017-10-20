@@ -94,13 +94,14 @@ int solution::pathfinding(int R) {
 vector<vector<int> > solution::recursive(vector<vector<int> > N, vector<vector<int> > T) {
 	//initialize new neighbourhood
 	vector<vector<int> > newN;
-	//explore neighbours with transformation
+	//explore neighbours with transformations
 	for (int n = 0; n < N.size(); n++) {
 		for (int t = 0; t < T.size(); t++) {
 			int X = N[n][0] + T[t][0];
 			int Y = N[n][1] + T[t][1];
 			if (X >= 0 && X < size) {
 				if (Y >= 0 && Y < size) {
+					//if there is a captor and the transformation is allowed add new neighbour
 					if (grid[X][Y] && !(N[n][2] == T[t][0] && N[n][3] == T[t][1])) {
 						newN.push_back({ X,Y, -T[t][0], -T[t][1] });
 					}
@@ -108,6 +109,7 @@ vector<vector<int> > solution::recursive(vector<vector<int> > N, vector<vector<i
 			}
 		}
 	}
+	//avoid common values between newN and N
 	vector<vector<int> > nnewN;
 	for (int i = 0; i < newN.size(); i++) {
 		bool test = false;
@@ -120,9 +122,11 @@ vector<vector<int> > solution::recursive(vector<vector<int> > N, vector<vector<i
 			nnewN.push_back(newN[i]);
 		}
 	}
+	//if the new neighbourhood is empty
 	if (nnewN.size() == 0) {
 		return N;
 	}
+	//else we find new neighbours recursively and give back N + result of recursive
 	else {
 		vector<vector<int> > NN = recursive(nnewN, T);
 		N.insert(N.end(), NN.begin(), NN.end());
