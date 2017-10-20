@@ -73,7 +73,7 @@ void solution::updateCover() {
 
 //Finding if sol is realisable
 bool solution::realisable(){
-	this->updateCover(1);
+	this->updateCover();
 	for(int i = 0; i < cover.size(); i++){
 		for(int j = 0; j < cover.size(); j++){
 			if(cover[i][j] < 1) return false;
