@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
+//constructor : create the grid nxn with captors everywhere
 solution::solution(int n) {
 	size = n;
 	for (int i = 0; i < n; i++) {
@@ -13,6 +14,7 @@ solution::solution(int n) {
 	}
 }
 
+//calculates all possible transformation given a radius R
 vector<vector<int> > solution::neighbour_transf(int R) {
 	vector<vector<int> > transf;
 	for (int i = -R; i <= R; i++) {
@@ -25,22 +27,19 @@ vector<vector<int> > solution::neighbour_transf(int R) {
 	return transf;
 }
 
-solution solution::getNeighbour(vector<int> pos, int R) {
+//return the neighbour at position pos
+solution solution::getNeighbour(vector<int> pos) {
+	//copy the current solution
 	solution sol = *this;
-	vector<vector<int> > transf = neighbour_transf(R);
-	for (int i = 0; i < transf.size(); i++){
-		int X = pos[0] + transf[i][0];
-		if (X >= 0 && X < size) {
-			int Y = pos[1] + transf[i][1];
-			if (Y >= 0 && Y < size) {
-				sol.grid[X][Y] = !this->grid [X][Y];
-			}
-		}
+	if (pos[0] >= 0 && pos[0] < size && pos[1] >= 0 && pos[1] < size) {
+		sol.grid[pos[0]][pos[1]] = !this->grid[pos[0]][pos[1]];
 	}
 	return sol;
 }
 
+//Calculate the cover
 void solution::updateCover(int R) {
+	//Get the transformation possible
 	vector<vector<int> > transf = this->neighbour_transf(R);
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
