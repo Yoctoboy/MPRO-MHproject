@@ -275,8 +275,9 @@ int solution::evalPath() {
 void solution::printgrid(){
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
-			printf("%c", grid[i][j] ? '#' : '.');
+			printf(grid[i][j] ? "#" : "\u00B7");
 		}
-		puts("");
+		printf("\n");
 	}
+	printf("\n");
 }
