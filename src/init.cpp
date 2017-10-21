@@ -11,30 +11,29 @@
 #include <queue>
 #include <climits>
 #include <ctime>
+#include <chrono>
 #include "solution.h"
 #include "init.h"
 
-solution get_initial_solution(int size, int rcap, int rcom){
+solution get_initial_solution(int size, int rcap, int rcom, bool randomized){
+  clock_t t = clock();
   solution sol = solution(size, rcap, rcom);
-  bool remove_possible = true;
-  bool done_iter = false;
-  while(remove_possible){
-    done_iter = false;
-    for(int i = 0; i < size; i++){
-      for(int j = 0; j < size && !done_iter; j++){
-        if(i!=0 || j!=0){
-          if(sol.removeCaptor(make_pair(i, j))){
-            if(sol.realisable()){
-              done_iter = true;
-            }
-            else{
-              sol.addCaptor(make_pair(i, j));
-            }
-          }
-        }
+
+  vector< pair<int,int> > cibles;
+  for(int i = 0; i < size; i++){
+    for(int j = (i==0) ? 1 : 0; j < size; j++){
+      cibles.push_back(make_pair(i, j));
+    }
+  }
+  if(randomized) random_shuffle(cibles.begin(), cibles.end());
+  for(int k = 0; k < cibles.size(); k++){
+    if(sol.removeCaptor(cibles[k])){
+      if(!sol.realisable()){
+        sol.addCaptor(cibles[k]);
       }
     }
-    if(!done_iter) remove_possible = false;
   }
+  t = clock()-t;
+  printf("Solution found in %lfs:\n\n", ((float(t))/CLOCKS_PER_SEC));
   return sol;
 }
