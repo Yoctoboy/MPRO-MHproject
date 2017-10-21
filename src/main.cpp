@@ -18,9 +18,10 @@
 int main(){
 	freopen("log.txt", "w", stderr);
 	srand(time(NULL));
-	int size = 10, Rcap = 1, Rcom = 1;
-	solution s = get_initial_solution(size, Rcap, Rcom);
+	int size = 20, Rcap = 1, Rcom = 2;
+	solution s = get_initial_solution(size, Rcap, Rcom, false);
 	s.printgrid();
+	printf("Amount of captors : %d/%d\n", s.getCapt(), size*size);
 
 
 	/*mhAlea MH = mhAlea(sizz, 1, 1, 1000);
