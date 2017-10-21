@@ -4,5 +4,6 @@ Win32/*
 mh_exe.dir/*
 a.exe
 a
+*.o
+Makefile
 log.txt
-
