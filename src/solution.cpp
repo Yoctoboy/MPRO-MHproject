@@ -34,6 +34,7 @@ solution::solution(int n, int rcap, int rcom) {
 		cover.push_back(intermediate1);
 		com.push_back(intermediate1);
 	}
+	grid[0][0] = false;
 	transf_capt = neighbour_transf(Rcap);
 	transf_com = neighbour_transf(Rcom);
 }
@@ -59,53 +60,7 @@ void solution::getNeighbour(pair<int, int> pos) {
 	}
 }
 
-//Calculate the cover
-void solution::updateCover() {
-	//Get the transformation possible
-	REP(i, transf_capt.size()){
-		//printf("%d %d\n", transf[i].first, transf[i].second);
-	}
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			if (grid[i][j]) {
-				for (int t = 0; t < transf_capt.size(); t++) {
-					int X = i + transf_capt[t].first;
-					if (X >= 0 && X < size) {
-						int Y = j + transf_capt[t].second;
-						if (Y >= 0 && Y < size) {
-							cover[X][Y]++;
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-//Calculate the cover
-void solution::updateCom() {
-	//Get the transformation possible
-	REP(i, transf_com.size()) {
-		//printf("%d %d\n", transf[i].first, transf[i].second);
-	}
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			if (grid[i][j]) {
-				for (int t = 0; t < transf_capt.size(); t++) {
-					int X = i + transf_capt[t].first;
-					if (X >= 0 && X < size) {
-						int Y = j + transf_capt[t].second;
-						if (Y >= 0 && Y < size && !(X == i && Y == j)) {
-							com[X][Y]++;
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-//Finding if sol is realisable (only couverture)
+//Finding if sol is realisable (only cover)
 bool solution::allCover(){
 	this->updateCover();
 	for(int i = 0; i < cover.size(); i++){
@@ -153,6 +108,14 @@ bool solution::allCommunicate(){
 	return found == nbCapteurs;
 }
 
+bool solution::realisable(){
+	bool iscov = allCover();
+	bool iscom = allCommunicate();
+	if(!iscov) clog << "- NOT ALL COVERED";
+	if(!iscom) clog << "- NOT ALL COMMUNICATE ";
+	clog << endl;
+	return (iscov && iscom);
+}
 
 bool solution::addCaptor(pair<int, int> pos){
 	if(!grid[pos.first][pos.second]){
@@ -198,6 +161,53 @@ bool solution::removeCaptor(pair<int, int> pos){
 		return true;
 	}
 	else return false;
+}
+
+//Calculate the cover
+void solution::updateCover() {
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			cover[i][j] = 0;
+		}
+	}
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (grid[i][j]) {
+				for (int t = 0; t < transf_capt.size(); t++) {
+					int X = i + transf_capt[t].first;
+					if (X >= 0 && X < size) {
+						int Y = j + transf_capt[t].second;
+						if (Y >= 0 && Y < size) {
+							cover[X][Y]++;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+//Calculate the cover
+void solution::updateCom() {
+	//Get the transformation possible
+	REP(i, transf_com.size()) {
+		//printf("%d %d\n", transf[i].first, transf[i].second);
+	}
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (grid[i][j]) {
+				for (int t = 0; t < transf_capt.size(); t++) {
+					int X = i + transf_capt[t].first;
+					if (X >= 0 && X < size) {
+						int Y = j + transf_capt[t].second;
+						if (Y >= 0 && Y < size && !(X == i && Y == j)) {
+							com[X][Y]++;
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 //Unitary transformation

@@ -17,6 +17,7 @@ public:
 	void getNeighbour(pair<int,int>);
 	bool allCover();
 	bool allCommunicate();
+	bool realisable();
 	bool addCaptor(pair<int,int>);
 	bool removeCaptor(pair<int,int>);
 	void updateCover();
