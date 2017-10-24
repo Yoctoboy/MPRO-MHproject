@@ -36,5 +36,6 @@ solution get_initial_solution(int size, int rcap, int rcom, bool randomized){
   }
   t = clock()-t;
   printf("Initial solution found in %lfs\n\n", ((float(t))/CLOCKS_PER_SEC));
+  sol.sortCaptors();
   return sol;
 }
