@@ -36,11 +36,36 @@ solution::solution(int n, int rcap, int rcom) {
 	}
 	captors.clear();
 	for(int i = 0; i < n; i++){
-		for(int j = i==0? 1 : 0; j < n; j++){
+		for(int j = i==0 ? 1 : 0; j < n; j++){
 			captors.push_back(make_pair(i,j));
 		}
 	}
 	grid[0][0] = false;
+	transf_capt = neighbour_transf(Rcap);
+	transf_com = neighbour_transf(Rcom);
+}
+
+solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captors) {
+	size = n;
+	Rcap = rcap;
+	Rcom = rcom;
+	nbCapteurs = (n*n)-1;
+	captors = captors;
+	vector<bool> intermediate;
+	vector<int> intermediate1;
+	for (int i = 0; i < n; i++) {
+		intermediate.push_back(false);
+		intermediate1.push_back(0);
+	}
+	grid.clear();
+	for (int i = 0; i < n; i++){
+		grid.push_back(intermediate);
+		cover.push_back(intermediate1);
+		com.push_back(intermediate1);
+	}
+	for(int i = 0; i < captors.size(); i++){
+		grid[captors[i].first][captors[i].second] = true;
+	}
 	transf_capt = neighbour_transf(Rcap);
 	transf_com = neighbour_transf(Rcom);
 }
@@ -58,6 +83,13 @@ vector< pair<int, int> > solution::neighbour_transf(int R) {
 	return transf;
 }
 
+void solution::sortCaptors() {
+	sort(captors.begin(),
+			 captors.end(),
+			 [](pair<int,int> a, pair<int,int> b){
+				 return a.first==b.first ? a.second<b.second : a.first < b.first;
+			 });
+}
 //return the neighbour at position pos
 void solution::getNeighbour(pair<int, int> pos) {
 	int R = removeCaptor(pos);
@@ -280,12 +312,12 @@ int solution::evalPath() {
 void solution::printgrid(bool log = false){
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
-			if(log) printf(grid[i][j] ? "#" : "\u00B7");
+			if(!log) printf(grid[i][j] ? "#" : "\u00B7");
 			else fprintf(stderr, grid[i][j] ? "#" : "\u00B7");
 		}
-		if (log) printf("\n");
+		if (!log) printf("\n");
 		else fprintf(stderr, "\n");
 	}
-	if(log) printf("\n");
+	if(!log) printf("\n");
 	else fprintf(stderr, "\n");
 }

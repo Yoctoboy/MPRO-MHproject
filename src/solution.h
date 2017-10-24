@@ -13,8 +13,10 @@ public:
 	vector< pair<int, int> > captors;
 
 	solution(int, int, int);
+	solution(int, int, int, vector< pair<int, int> >);
 	solution() {};
 	vector< pair<int, int> > neighbour_transf(int);
+	void sortCaptors();
 	void getNeighbour(pair<int,int>);
 	bool allCover();
 	bool allCommunicate();
