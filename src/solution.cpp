@@ -45,12 +45,12 @@ solution::solution(int n, int rcap, int rcom) {
 	transf_com = neighbour_transf(Rcom);
 }
 
-solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captors) {
+solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captorsarg) {
 	size = n;
 	Rcap = rcap;
 	Rcom = rcom;
-	nbCapteurs = (n*n)-1;
-	captors = captors;
+	captors = captorsarg;
+	nbCapteurs = captors.size();
 	vector<bool> intermediate;
 	vector<int> intermediate1;
 	for (int i = 0; i < n; i++) {
@@ -309,7 +309,7 @@ int solution::evalPath() {
 	return vmoy/(size*size);
 }
 
-void solution::printgrid(bool log = false){
+void solution::printgrid(bool log){
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
 			if(!log) printf(grid[i][j] ? "#" : "\u00B7");
@@ -320,4 +320,16 @@ void solution::printgrid(bool log = false){
 	}
 	if(!log) printf("\n");
 	else fprintf(stderr, "\n");
+}
+
+solution& solution::operator=(const solution& other){
+	size = other.size;
+	Rcap = other.Rcap;
+	Rcom = other.Rcom;
+	cover = other.cover;
+	captors = other.captors;
+	grid = other.grid;
+	com = other.com;
+	nbCapteurs = other.nbCapteurs;
+	return *this;
 }

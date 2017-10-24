@@ -17,12 +17,12 @@ public:
 	solution() {};
 	vector< pair<int, int> > neighbour_transf(int);
 	void sortCaptors();
-	void getNeighbour(pair<int,int>);
+	void getNeighbour(pair<int, int>);
 	bool allCover();
 	bool allCommunicate();
 	bool realisable();
-	bool addCaptor(pair<int,int>);
-	bool removeCaptor(pair<int,int>);
+	bool addCaptor(pair<int, int>);
+	bool removeCaptor(pair<int, int>);
 	void updateCover();
 	void updateCom();
 	void transf1();
@@ -30,7 +30,12 @@ public:
 	void transfConc1();
 	int evalCover();
 	int evalPath();
-	void printgrid(bool);
+	void printgrid(bool log = false);
+	vector< vector<bool> > getGrid() {return grid;};
+	vector<pair<int, int> > getTransf_capt() {return transf_capt;};
+	vector<pair<int, int> > getTransf_com() {return transf_com;};
+
+	solution& operator=(const solution& other);
 
 private:
 	int size;
