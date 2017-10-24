@@ -28,7 +28,7 @@ public:
 	void transfConc1();
 	int evalCover();
 	int evalPath();
-	void printgrid();
+	void printgrid(bool);
 
 private:
 	int size;

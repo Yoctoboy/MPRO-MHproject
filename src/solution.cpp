@@ -277,12 +277,15 @@ int solution::evalPath() {
 	return vmoy/(size*size);
 }
 
-void solution::printgrid(){
+void solution::printgrid(bool log = false){
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
-			printf(grid[i][j] ? "#" : "\u00B7");
+			if(log) printf(grid[i][j] ? "#" : "\u00B7");
+			else fprintf(stderr, grid[i][j] ? "#" : "\u00B7");
 		}
-		printf("\n");
+		if (log) printf("\n");
+		else fprintf(stderr, "\n");
 	}
-	printf("\n");
+	if(log) printf("\n");
+	else fprintf(stderr, "\n");
 }

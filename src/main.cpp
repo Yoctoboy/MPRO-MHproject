@@ -20,7 +20,7 @@ int main(){
 	srand(time(NULL));
 	int size = 40, Rcap = 1, Rcom = 2;
 	solution s = get_initial_solution(size, Rcap, Rcom, false);
-	s.printgrid();
+	clog << s.printgrid();
 	printf("Amount of captors : %d/%d\n", s.getCapt(), size*size);
 
 
