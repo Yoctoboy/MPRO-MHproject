@@ -34,6 +34,12 @@ solution::solution(int n, int rcap, int rcom) {
 		cover.push_back(intermediate1);
 		com.push_back(intermediate1);
 	}
+	captors.clear();
+	for(int i = 0; i < n; i++){
+		for(int j = i==0? 1 : 0; j < n; j++){
+			captors.push_back(make_pair(i,j));
+		}
+	}
 	grid[0][0] = false;
 	transf_capt = neighbour_transf(Rcap);
 	transf_com = neighbour_transf(Rcom);
@@ -111,9 +117,6 @@ bool solution::allCommunicate(){
 bool solution::realisable(){
 	bool iscov = allCover();
 	bool iscom = allCommunicate();
-	if(!iscov) clog << "- NOT ALL COVERED";
-	if(!iscom) clog << "- NOT ALL COMMUNICATE ";
-	clog << endl;
 	return (iscov && iscom);
 }
 
@@ -121,6 +124,7 @@ bool solution::addCaptor(pair<int, int> pos){
 	if(!grid[pos.first][pos.second]){
 		grid[pos.first][pos.second] = true;
 		nbCapteurs++;
+		captors.push_back(pos);
 		for (int t = 0; t < transf_capt.size(); t++){
 			int X = pos.first + transf_capt[t].first;
 			int Y = pos.second + transf_capt[t].second;
@@ -144,6 +148,7 @@ bool solution::removeCaptor(pair<int, int> pos){
 	if(grid[pos.first][pos.second]){
 		grid[pos.first][pos.second] = false;
 		nbCapteurs--;
+		captors.erase(find(captors.begin(), captors.end(), pos));
 		for (int t = 0; t < transf_capt.size(); t++) {
 			int X = pos.first + transf_capt[t].first;
 			int Y = pos.second + transf_capt[t].second;

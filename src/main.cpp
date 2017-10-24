@@ -18,8 +18,8 @@
 int main(){
 	freopen("log.txt", "w", stderr);
 	srand(time(NULL));
-	int size = 50, Rcap = 1, Rcom = 2;
-	solution s = get_initial_solution(size, Rcap, Rcom, true);
+	int size = 40, Rcap = 1, Rcom = 2;
+	solution s = get_initial_solution(size, Rcap, Rcom, false);
 	s.printgrid();
 	printf("Amount of captors : %d/%d\n", s.getCapt(), size*size);
 

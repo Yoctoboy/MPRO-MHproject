@@ -10,6 +10,7 @@ public:
 	int getCapt() { return nbCapteurs; }
 	vector<vector<int> > cover;
 	vector<vector<int> > com;
+	vector< pair<int, int> > captors;
 
 	solution(int, int, int);
 	solution() {};
