@@ -6,7 +6,7 @@
 
 class mhGenetic {
 public:
-  vector< solution > pool;
+  vector< solution* > pool;
   vector<int> mask;
 
   mhGenetic(int,int,int,int);
@@ -21,4 +21,4 @@ private:
   int poolsize;
 };
 
-#endif
+#endif;

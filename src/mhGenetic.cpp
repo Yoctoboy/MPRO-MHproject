@@ -26,6 +26,7 @@ mhGenetic::mhGenetic(int poolsize, int rcap, int rcom, int size){
   pool = {get_initial_solution(size, Rcap, Rcom, true)};
   pool.reserve(poolsize);
   generatePool(10);
+  puts("init ok lol");
 }
 
 void mhGenetic::generatePool(int initsize){
@@ -35,5 +36,9 @@ void mhGenetic::generatePool(int initsize){
     printf("%d\n", i);
 	solution* s = new solution(size, Rcap, Rcom);
     store.push_back(s);
+    pool.push_back(new solution()) ;
+  }
+  for(int i = 0; i < initsize; i++){
+    *pool[i] = get_initial_solution(size, Rcap, Rcom, true);
   }
 }
