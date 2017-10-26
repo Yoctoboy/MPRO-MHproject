@@ -23,6 +23,7 @@ int main(){
 	int size = 10, Rcap = 1, Rcom = 1;
 	puts("initializing m");
 	mhGenetic m = mhGenetic(30, Rcap, Rcom, size);
+	m.generateMask();
 	puts("m initialized");
 	//m.launchMH(1);
 
