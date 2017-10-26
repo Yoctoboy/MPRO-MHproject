@@ -22,15 +22,16 @@ mhGenetic::mhGenetic(int poolsize, int rcap, int rcom, int size){
   Rcom = rcom;
   Rcap = rcap;
   size = size;
-  mask.reserve(100);
-  pool = {get_initial_solution(size, Rcap, Rcom, true)};
   generatePool(10);
+  puts("init ok lol");
 }
 
 void mhGenetic::generatePool(int initsize){
   for(int i = 0; i < initsize; i++){
     printf("%d\n", i);
-    pool.resize(i);
-    pool[i] = (get_initial_solution(size, Rcap, Rcom));
+    pool.push_back(new solution()) ;
+  }
+  for(int i = 0; i < initsize; i++){
+    *pool[i] = get_initial_solution(size, Rcap, Rcom, true);
   }
 }
