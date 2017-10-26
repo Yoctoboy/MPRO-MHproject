@@ -26,7 +26,6 @@ solution get_initial_solution(int size, int rcap, int rcom, bool randomized){
     }
   }
 
-  srand(rand());
   if(randomized) random_shuffle(cibles.begin(), cibles.end());
   for(int k = 0; k < cibles.size(); k++){
     if(sol.removeCaptor(cibles[k])){
@@ -37,6 +36,5 @@ solution get_initial_solution(int size, int rcap, int rcom, bool randomized){
   }
   t = clock()-t;
   sol.sortCaptors();
-  printf("Initial solution found in %lfs, with %d captors\n", ((float(t))/CLOCKS_PER_SEC), sol.getCapt());
   return sol;
 }

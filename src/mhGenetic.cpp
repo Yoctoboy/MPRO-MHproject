@@ -16,22 +16,17 @@
 #include "solution.h"
 #include "init.h"
 
-mhGenetic::mhGenetic(int poolsize, int rcap, int rcom, int size){
-  puts("init in progress.....");
-  poolsize = poolsize;
+mhGenetic::mhGenetic(int poolsizz, int rcap, int rcom, int sizz){
+  poolsize = poolsizz;
   Rcom = rcom;
   Rcap = rcap;
-  size = size;
-  generatePool(10);
-  puts("init ok lol");
+  size = sizz;
+  pool.reserve(poolsize);
+  generatePool(poolsize);
 }
 
 void mhGenetic::generatePool(int initsize){
   for(int i = 0; i < initsize; i++){
-    printf("%d\n", i);
-    pool.push_back(new solution()) ;
-  }
-  for(int i = 0; i < initsize; i++){
-    *pool[i] = get_initial_solution(size, Rcap, Rcom, true);
+    pool[i]=(get_initial_solution(size, Rcap, Rcom, true));
   }
 }

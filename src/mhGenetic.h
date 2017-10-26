@@ -3,10 +3,11 @@
 
 #include <vector>
 #include "solution.h"
+using namespace std;
 
 class mhGenetic {
 public:
-  vector< solution* > pool;
+  vector<solution> pool;
   vector<int> mask;
 
   mhGenetic(int,int,int,int);

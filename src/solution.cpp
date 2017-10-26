@@ -52,6 +52,19 @@ solution::solution(const solution &s){
 	nbCapteurs = (size*size)-1;
 }
 
+solution::solution(){
+	cover = {};
+	com = {};
+	captors = {};
+	size = 1;
+	Rcap = 1;
+	Rcom = 1;
+	nbCapteurs = 1;
+	grid = {};
+	transf_com = {};
+	transf_capt = {};
+}
+
 solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captorsarg) {
 	size = n;
 	Rcap = rcap;
