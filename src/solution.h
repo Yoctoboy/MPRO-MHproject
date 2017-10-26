@@ -14,6 +14,7 @@ public:
 
 	solution(int, int, int);
 	solution(int, int, int, vector< pair<int, int> >);
+	solution(const solution &);
 	solution() {};
 	vector< pair<int, int> > neighbour_transf(int);
 	void sortCaptors();
