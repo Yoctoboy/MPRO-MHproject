@@ -45,6 +45,13 @@ solution::solution(int n, int rcap, int rcom) {
 	transf_com = neighbour_transf(Rcom);
 }
 
+solution::solution(const solution &s){
+	size = s.size;
+	Rcap = s.Rcap;
+	Rcom = s.Rcom;
+	nbCapteurs = (size*size)-1;
+}
+
 solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captorsarg) {
 	size = n;
 	Rcap = rcap;
@@ -331,5 +338,7 @@ solution& solution::operator=(const solution& other){
 	grid = other.grid;
 	com = other.com;
 	nbCapteurs = other.nbCapteurs;
+	transf_com = other.transf_com;
+	transf_capt = other.transf_capt;
 	return *this;
 }

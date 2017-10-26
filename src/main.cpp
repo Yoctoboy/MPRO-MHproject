@@ -15,15 +15,16 @@
 #include "mhAlea.h"
 #include "init.h"
 #include "mhMigration.h"
+#include "mhGenetic.h"
 
 int main(){
 	freopen("log.txt", "w", stderr);
 	srand(time(NULL));
-	int size = 15, Rcap = 2, Rcom = 2;
+	int size = 10, Rcap = 1, Rcom = 1;
 	puts("initializing m");
-	mhMigration m = mhMigration(size, Rcap, Rcom);
+	mhGenetic m = mhGenetic(30, Rcap, Rcom, size);
 	puts("m initialized");
-	m.launchMH(1000);
+	//m.launchMH(1);
 
 	/*s.printgrid(false);
 	printf("Amount of captors : %d/%d\n", s.getCapt(), size*size);
