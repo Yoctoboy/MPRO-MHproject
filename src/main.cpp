@@ -17,7 +17,7 @@
 #include "mhMigration.h"
 
 int main(){
-	freopen("log.txt", "w", stderr);
+	/*freopen("log.txt", "w", stderr);
 	srand(time(NULL));
 	int size = 15, Rcap = 2, Rcom = 2;
 	puts("initializing m");
@@ -36,5 +36,9 @@ int main(){
 	mhAlea MH3 = mhAlea(sizz, 1, 1, 1000);
 	MH3.launchMHconc();
 	system("pause");*/
+
+	char x = 8;
+	cout << x << endl;
+	system("pause");
 	return 0;
 }
