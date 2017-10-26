@@ -32,10 +32,13 @@ void mhGenetic::generatePool(int initsize){
 }
 
 void mhGenetic::generateMask() {
+  mask.clear();
+  vector<int> line;
+  int x;
 	for (int i = 0; i < size; i++) {
-		vector<int> line;
+		line.clear();
 		for (int j = 0; j < size; j++) {
-			int x = rand() % 2;
+			x = rand() % 2;
 			line.push_back(x);
 		}
 		mask.push_back(line);
