@@ -25,6 +25,16 @@ int main(){
 	mhGenetic m = mhGenetic(30, Rcap, Rcom, size);
 	m.generateMask();
 	puts("m initialized");
+	pair<solution, solution> t = m.breed(m.pool[0], m.pool[1]);
+	puts("MOTHER");
+	m.pool[0].printgrid();
+	puts("FATHER");
+	m.pool[1].printgrid();
+
+	puts("DAUGTHER");
+	t.first.printgrid();
+	puts("SON");
+	t.second.printgrid();
 	//m.launchMH(1);
 
 	//s.printgrid(false);
