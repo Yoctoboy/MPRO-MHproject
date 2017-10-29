@@ -15,7 +15,8 @@ public:
   int getPoolsize() { return poolsize; };
 
   mhGenetic(int,int,int,int);
-  void generateMask();
+  void generateBinaryMask();
+  void generateMask(float);
   void generatePool(int);
   pair<solution,solution> breed(solution, solution);
   pair<solution,solution> breed2(int, int);

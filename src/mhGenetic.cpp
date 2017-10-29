@@ -23,7 +23,7 @@ mhGenetic::mhGenetic(int poolsizz, int rcap, int rcom, int sizz){
   size = sizz;
   pool.reserve(poolsize);
   generatePool(poolsize);
-  generateMask();
+  generateBinaryMask();
   breed(pool[0], pool[1]);
 }
 
@@ -33,7 +33,7 @@ void mhGenetic::generatePool(int initsize){
   }
 }
 
-void mhGenetic::generateMask() {
+void mhGenetic::generateBinaryMask() {
   mask.clear();
   vector<int> line;
   int x;
@@ -45,6 +45,25 @@ void mhGenetic::generateMask() {
 		}
 		mask.push_back(line);
 	}
+}
+
+void mhGenetic::generateMask(float prop){
+  mask.clear();
+  vector<int> line;
+  int x;
+  for (int i = 0; i < size; i++) {
+		line.clear();
+		for (int j = 0; j < size; j++) {
+			x = rand() % 2;
+			line.push_back(x);
+		}
+		mask.push_back(line);
+	}
+  for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+      if((float)rand()/RAND_MAX < prop) mask[i][j] = 2;
+    }
+  }
 }
 
 solution mhGenetic::mutate(solution s, int k) {
