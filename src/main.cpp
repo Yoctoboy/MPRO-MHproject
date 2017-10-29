@@ -23,7 +23,7 @@ int main(){
 	int size = 10, Rcap = 1, Rcom = 1;
 	puts("initializing m");
 	mhGenetic m = mhGenetic(30, Rcap, Rcom, size);
-	m.generateMask();
+	m.generateBinaryMask();
 	puts("m initialized");
 	pair<solution, solution> t = m.breed(m.pool[0], m.pool[1]);
 	puts("MOTHER");
@@ -33,8 +33,7 @@ int main(){
 
 	puts("DAUGTHER");
 	t.first.printgrid();
-	puts("SON");
-	t.second.printgrid();
+	printf("with %d captors\n", t.first.getCapt());
 	//m.launchMH(1);
 
 	//s.printgrid(false);

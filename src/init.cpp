@@ -19,7 +19,7 @@ solution get_initial_solution(int size, int rcap, int rcom, bool randomized){
   clock_t t = clock();
   solution sol = solution(size, rcap, rcom);
 
-  vector< pair<int,int> > cibles;
+  vector< pair<int, int> > cibles;
   for(int i = 0; i < size; i++){
     for(int j = (i==0) ? 1 : 0; j < size; j++){
       cibles.push_back(make_pair(i, j));
