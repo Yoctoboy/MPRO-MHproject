@@ -24,14 +24,12 @@ mhGenetic::mhGenetic(int poolsizz, int rcap, int rcom, int sizz){
   pool.reserve(poolsize);
   generatePool(poolsize);
   generateMask();
-  breed(*pool[0], *pool[1]);
+  breed(pool[0], pool[1]);
 }
 
 void mhGenetic::generatePool(int initsize){
   for(int i = 0; i < initsize; i++){
-	  solution* s = new solution(size, Rcap, Rcom);
-	  *s = get_initial_solution(size, Rcap, Rcom, true);
-	  pool.push_back(s);
+	  pool[i] = get_initial_solution(size, Rcap, Rcom, true);
   }
 }
 
@@ -58,12 +56,9 @@ solution mhGenetic::mutate(solution s, int k) {
 	return s;
 }
 
-pair<solution, solution> mhGenetic::breed(solution sm, solution sp) {
+pair<solution, solution> mhGenetic::breed(solution sm, solution sp){
 	solution s1 = sm;
 	solution s2 = sp;
-	sm.printgrid();
-	sp.printgrid();
-	cout << "masque " << mask.size() << " " << mask[0].size() << endl;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (mask[i][j] == 0) {
@@ -75,4 +70,20 @@ pair<solution, solution> mhGenetic::breed(solution sm, solution sp) {
 		}
 	}
 	return { s1, s2 };
-};
+}
+
+pair<solution, solution> mhGenetic::breed2(int a, int b) {
+	solution s1 = pool[a];
+	solution s2 = pool[b];
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (mask[i][j] == 0) {
+				s1.setGridVal(i, j, pool[b].getGridVal(i, j));
+			}
+			if (mask[i][j] == 1) {
+				s2.setGridVal(i, j, pool[a].getGridVal(i, j));
+			}
+		}
+	}
+	return { s1, s2 };
+}

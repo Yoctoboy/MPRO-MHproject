@@ -8,14 +8,17 @@ using namespace std;
 
 class mhGenetic {
 public:
-  vector<solution*> pool;
+  vector<solution> pool;
 
   vector<vector<int> > mask;
+
+  int getPoolsize() { return poolsize; };
 
   mhGenetic(int,int,int,int);
   void generateMask();
   void generatePool(int);
   pair<solution,solution> breed(solution, solution);
+  pair<solution,solution> breed2(int, int);
   solution mutate(solution, int);
 
 private:
@@ -25,4 +28,4 @@ private:
   int poolsize;
 };
 
-#endif;
+#endif
