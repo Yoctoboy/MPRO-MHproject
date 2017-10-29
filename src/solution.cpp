@@ -49,13 +49,14 @@ solution::solution(const solution &s){
 	size = s.size;
 	Rcap = s.Rcap;
 	Rcom = s.Rcom;
-	nbCapteurs = (size*size)-1;
 	grid = s.grid;
 	cover = s.cover;
-	com = s.com;
 	captors = s.captors;
-	transf_capt = s.transf_capt;
+	grid = s.grid;
+	com = s.com;
 	transf_com = s.transf_com;
+	transf_capt = s.transf_capt;
+	nbCapteurs = s.nbCapteurs;
 }
 
 solution::solution() {

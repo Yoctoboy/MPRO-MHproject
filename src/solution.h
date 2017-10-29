@@ -8,6 +8,7 @@ using namespace std;
 class solution {
 public:
 	int getCapt() { return nbCapteurs; }
+	int getSize() { return size; }
 	vector<vector<int> > cover;
 	vector<vector<int> > com;
 	vector< pair<int, int> > captors;
