@@ -21,13 +21,16 @@ mhGenetic::mhGenetic(int poolsizz, int rcap, int rcom, int sizz){
   Rcom = rcom;
   Rcap = rcap;
   size = sizz;
-  pool.reserve(poolsize);
-  generatePool(poolsize);
+  //pool.reserve(poolsize);
+  generatePool(3);
+  generateMask();
+  breed(*pool[0], *pool[1]);
 }
 
 void mhGenetic::generatePool(int initsize){
   for(int i = 0; i < initsize; i++){
-    pool[i]=(get_initial_solution(size, Rcap, Rcom, true));
+	  solution* s = new solution(10, 1, 1);
+	  pool.push_back(s);
   }
 }
 
@@ -57,6 +60,9 @@ solution mhGenetic::mutate(solution s, int k) {
 pair<solution, solution> mhGenetic::breed(solution sm, solution sp) {
 	solution s1 = sm;
 	solution s2 = sp;
+	sm.printgrid();
+	sp.printgrid();
+	cout << "masque " << mask.size() << " " << mask[0].size() << endl;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (mask[i][j] == 0) {

@@ -20,7 +20,7 @@ mhAlea::mhAlea(int s, int rca, int rco, int it) {
 //Get loss of value
 void mhAlea::loss() {
 	currVal = currSol.getCapt() +
-		pow(size,2) * (currSol.allCover() + currSol.allCommunicate() + currSol.evalCover() + currSol.evalPath());
+		pow(size,2) * (2 - currSol.allCover() - currSol.allCommunicate() + currSol.evalCover() + currSol.evalPath());
 }
 
 //Launch the meta

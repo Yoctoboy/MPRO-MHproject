@@ -8,7 +8,8 @@ using namespace std;
 
 class mhGenetic {
 public:
-  vector<solution> pool;
+  vector<solution*> pool;
+
   vector<vector<int> > mask;
 
   mhGenetic(int,int,int,int);
