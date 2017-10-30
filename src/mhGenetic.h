@@ -9,21 +9,19 @@ using namespace std;
 class mhGenetic {
 public:
   vector<solution> pool;
-
   vector<vector<int> > mask;
-
   int getPoolsize() { return poolsize; };
 
   mhGenetic(int,int,int,int);
-  void generateBinaryMask();
-  void generateMask(float);
   void generatePool(int);
   void updatePool(int);
   void sortPool();
+  void removeCaptorsFromPool(bool);
+  void generateBinaryMask();
+  void generateMask(float);
+  solution mutate(solution, int);
   pair<solution,solution> breed(solution, solution);
   pair<solution,solution> breed2(int, int);
-  solution mutate(solution, int);
-  bool compare(const solution & l, const solution & r) { return l.value < r.value; }
 
 private:
   int Rcap;
