@@ -346,8 +346,8 @@ double solution::evalPath() {
 void solution::printgrid(bool log){
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
-			if(!log) printf(grid[i][j] ? "#" : "\u00B7");
-			else fprintf(stderr, grid[i][j] ? "#" : "\u00B7");
+			if(!log) printf(grid[i][j] ? "*" : " ");
+			else fprintf(stderr, grid[i][j] ? "*" : " ");
 		}
 		if (!log) printf("\n");
 		else fprintf(stderr, "\n");

@@ -20,7 +20,7 @@
 int main(){
 	freopen("log.txt", "w", stderr);
 	srand(time(NULL));
-	int size = 10, Rcap = 1, Rcom = 1;
+	int size = 20, Rcap = 1, Rcom = 1;
 	puts("initializing m");
 	mhGenetic m = mhGenetic(10, Rcap, Rcom, size);
 	m.generateBinaryMask();
@@ -36,16 +36,23 @@ int main(){
 	puts("DAUGTHER");
 	t.second.printgrid();
 	printf("with %d captors\n", t.first.getCapt());*/
-	for (int t = 0; t < 200000; t++) {
+	for (int t = 0; t < 20000; t++) {
 		m.updatePool(15);
-		if (t % 20000 == t / 20000) {
-			cout << t/2000 << endl;
+		if (t % 2000 == t / 2000) {
+			cout << t/2000 << " ";
+			int count = 1000;
+			for (int t = 0; t < m.getPoolsize(); t++) {
+				if (count > m.pool[t].value) {
+					count = m.pool[t].value;
+				}
+			}
+			cout << count << endl;
 			m.pool[0].printgrid();
 		}
 	}
 	int count = 0;
 	for (int t = 0; t < m.getPoolsize(); t++) {
-		count += m.pool[t].getCapt();
+		count += m.pool[t].value;
 	}
 	cout << "mean captors " << count / m.getPoolsize() << endl;
 	//m.launchMH(1);

@@ -39,6 +39,16 @@ void mhGenetic::updatePool(int number) {
 		i0 = rand() % poolsize;
 		j0 = rand() % poolsize;
 		pair<solution, solution> result = breed2(i0, j0);
+		/*if (rand() < 0.5) {
+			int X = rand() % size;
+			int Y = rand() % size;
+			result.first.getNeighbour({ X,Y });
+		}
+		if (rand() < 0.5) {
+			int X = rand() % size;
+			int Y = rand() % size;
+			result.second.getNeighbour({ X,Y });
+		}*/
 		pool.push_back(result.first);
 		pool.push_back(result.second);
 	}
