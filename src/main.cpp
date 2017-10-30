@@ -33,6 +33,8 @@ int main(){
 
 	puts("DAUGTHER");
 	t.first.printgrid();
+	puts("DAUGTHER");
+	t.second.printgrid();
 	printf("with %d captors\n", t.first.getCapt());
 	//m.launchMH(1);
 
