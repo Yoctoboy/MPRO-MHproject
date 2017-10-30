@@ -43,6 +43,7 @@ solution::solution(int n, int rcap, int rcom) {
 	grid[0][0] = false;
 	transf_capt = neighbour_transf(Rcap);
 	transf_com = neighbour_transf(Rcom);
+	loss();
 }
 
 solution::solution(const solution &s){
@@ -57,6 +58,7 @@ solution::solution(const solution &s){
 	transf_com = s.transf_com;
 	transf_capt = s.transf_capt;
 	nbCapteurs = s.nbCapteurs;
+	value = s.value;
 }
 
 solution::solution() {
@@ -70,6 +72,7 @@ solution::solution() {
 	com = {};
 	transf_capt = {};
 	transf_com = {};
+	value = 0;
 }
 
 solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captorsarg) {
@@ -95,6 +98,7 @@ solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captorsar
 	}
 	transf_capt = neighbour_transf(Rcap);
 	transf_com = neighbour_transf(Rcom);
+	loss();
 }
 
 //calculates all possible transformation given a radius R
@@ -123,6 +127,7 @@ void solution::getNeighbour(pair<int, int> pos) {
 	if (R == -1) {
 		addCaptor(pos);
 	}
+	loss();
 }
 
 //Finding if sol is realisable (only cover)
@@ -198,6 +203,7 @@ bool solution::addCaptor(pair<int, int> pos){
 				com[X][Y] ++;
 			}
 		}
+		loss();
 		return true;
 	}
 	else return false;
@@ -222,6 +228,7 @@ bool solution::removeCaptor(pair<int, int> pos){
 				com[X][Y] --;
 			}
 		}
+		loss();
 		return true;
 	}
 	else return false;
@@ -305,7 +312,7 @@ void solution::transfConc1() {
 }
 
 //Evaluate quality of cover
-int solution::evalCover() {
+double solution::evalCover() {
 	float vmoy = 0;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
@@ -324,7 +331,7 @@ int solution::evalCover() {
 }
 
 //Evaluate quality of cover
-int solution::evalPath() {
+double solution::evalPath() {
 	float vmoy = 0;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
@@ -349,6 +356,11 @@ void solution::printgrid(bool log){
 	else fprintf(stderr, "\n");
 }
 
+void solution::loss() {
+	value = getCapt() + pow(size, 2) * (2 - allCover() - allCommunicate() + evalCover() + evalPath());
+	//value = getCapt();
+}
+
 solution& solution::operator=(const solution& other){
 	size = other.size;
 	Rcap = other.Rcap;
@@ -360,5 +372,6 @@ solution& solution::operator=(const solution& other){
 	nbCapteurs = other.nbCapteurs;
 	transf_com = other.transf_com;
 	transf_capt = other.transf_capt;
+	value = other.value;
 	return *this;
 }

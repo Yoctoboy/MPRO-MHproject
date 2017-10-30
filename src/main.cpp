@@ -22,10 +22,10 @@ int main(){
 	srand(time(NULL));
 	int size = 10, Rcap = 1, Rcom = 1;
 	puts("initializing m");
-	mhGenetic m = mhGenetic(30, Rcap, Rcom, size);
+	mhGenetic m = mhGenetic(5, Rcap, Rcom, size);
 	m.generateBinaryMask();
 	puts("m initialized");
-	pair<solution, solution> t = m.breed(m.pool[0], m.pool[1]);
+	/*pair<solution, solution> t = m.breed(m.pool[0], m.pool[1]);
 	puts("MOTHER");
 	m.pool[0].printgrid();
 	puts("FATHER");
@@ -35,7 +35,8 @@ int main(){
 	t.first.printgrid();
 	puts("DAUGTHER");
 	t.second.printgrid();
-	printf("with %d captors\n", t.first.getCapt());
+	printf("with %d captors\n", t.first.getCapt());*/
+	m.updatePool(15);
 	//m.launchMH(1);
 
 	//s.printgrid(false);

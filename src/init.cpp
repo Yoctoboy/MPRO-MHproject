@@ -36,5 +36,6 @@ solution get_initial_solution(int size, int rcap, int rcom, bool randomized){
   }
   t = clock()-t;
   sol.sortCaptors();
+  sol.loss();
   return sol;
 }

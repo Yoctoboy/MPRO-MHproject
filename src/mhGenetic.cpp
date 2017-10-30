@@ -33,6 +33,30 @@ void mhGenetic::generatePool(int initsize){
   }
 }
 
+void mhGenetic::updatePool(int number) {
+	int i0, j0;
+	for (int k = 0; k < number; k++) {
+		i0 = rand() % poolsize;
+		j0 = rand() % poolsize;
+		pair<solution, solution> result = breed2(i0, j0);
+		pool.push_back(result.first);
+		pool.push_back(result.second);
+	}
+	sortPool();
+}
+
+void mhGenetic::sortPool() {
+	for (int i = 0; i < pool.size(); i++){
+		cout << pool[i].value << " ";
+	}
+	sort(pool.begin(), pool.end());
+	pool.resize(poolsize);
+	cout << endl;
+	for (int i = 0; i < pool.size(); i++) {
+		cout << pool[i].value << " ";
+	}
+}
+
 void mhGenetic::generateBinaryMask() {
   mask.clear();
   vector<int> line;

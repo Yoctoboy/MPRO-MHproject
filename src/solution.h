@@ -12,11 +12,13 @@ public:
 	vector<vector<int> > cover;
 	vector<vector<int> > com;
 	vector< pair<int, int> > captors;
+	double value;
 
 	solution(int, int, int);
 	solution(int, int, int, vector< pair<int, int> >);
 	solution(const solution &);
 	solution();
+	void loss();
 	vector< pair<int, int> > neighbour_transf(int);
 	void sortCaptors();
 	void getNeighbour(pair<int, int>);
@@ -30,8 +32,8 @@ public:
 	void transf1();
 	void remove1();
 	void transfConc1();
-	int evalCover();
-	int evalPath();
+	double evalCover();
+	double evalPath();
 	void printgrid(bool log = false);
 	vector< vector<bool> > getGrid() {return grid;};
 	bool getGridVal(int i, int j) { return grid[i][j]; };
@@ -40,6 +42,7 @@ public:
 	vector<pair<int, int> > getTransf_com() {return transf_com;};
 
 	solution& operator=(const solution& other);
+	bool operator<(const  solution & other) { return value < other.value; }
 
 private:
 	int size;

@@ -18,9 +18,12 @@ public:
   void generateBinaryMask();
   void generateMask(float);
   void generatePool(int);
+  void updatePool(int);
+  void sortPool();
   pair<solution,solution> breed(solution, solution);
   pair<solution,solution> breed2(int, int);
   solution mutate(solution, int);
+  bool compare(const solution & l, const solution & r) { return l.value < r.value; }
 
 private:
   int Rcap;
