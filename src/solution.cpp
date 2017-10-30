@@ -355,6 +355,7 @@ void solution::printgrid(bool log){
 		else fprintf(stderr, "\n");
 	}
 	if(!log) printf("with %d captors", getCapt());
+	else fprintf(stderr, "with %d captors\n\n", getCapt());
 	if(!log) printf("\n");
 	else fprintf(stderr, "\n");
 }
