@@ -34,11 +34,11 @@ void mhGenetic::generatePool(int initsize){
   sortPool();
 }
 
-void mhGenetic::updatePool(int number) {
+void mhGenetic::updatePool(int number, float prop) {
 	int i0, j0;
   pair<solution, solution> result;
 	for (int k = 0; k < number; k++) {
-    generateMask(0.2);
+    generateMask(prop);
 		i0 = rand() % poolsize;
 		j0 = rand() % poolsize;
     while(j0==i0) j0 = rand() % poolsize;
@@ -50,7 +50,6 @@ void mhGenetic::updatePool(int number) {
       pool.push_back(result.second);
     }
 	}
-  printf("Added %d realisable solutions\n", (int)pool.size()-poolsize);
   removeCaptorsFromPool(true);
 	sortPool();
 }
