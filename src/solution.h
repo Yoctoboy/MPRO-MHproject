@@ -18,7 +18,6 @@ public:
 	solution(int, int, int, vector< pair<int, int> >);
 	solution(const solution &);
 	solution();
-	void loss();
 	vector< pair<int, int> > neighbour_transf(int);
 	void sortCaptors();
 	void getNeighbour(pair<int, int>);
@@ -35,9 +34,10 @@ public:
 	double evalCover();
 	double evalPath();
 	void printgrid(bool log = false);
+	void loss();
 	vector< vector<bool> > getGrid() {return grid;};
 	bool getGridVal(int i, int j) { return grid[i][j]; };
-	void setGridVal(int i, int j, int v) { grid[i][j] = v; };
+	void setGridVal(int i, int j, bool v);
 	vector<pair<int, int> > getTransf_capt() {return transf_capt;};
 	vector<pair<int, int> > getTransf_com() {return transf_com;};
 

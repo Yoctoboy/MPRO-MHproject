@@ -132,10 +132,12 @@ void solution::getNeighbour(pair<int, int> pos) {
 
 //Finding if sol is realisable (only cover)
 bool solution::allCover(){
-	this->updateCover();
+	updateCover();
 	for(int i = 0; i < cover.size(); i++){
 		for(int j = 0; j < cover.size(); j++){
-			if(cover[i][j] < 1) return false;
+			if(cover[i][j] < 1){
+				return false;
+			}
 		}
 	}
 	return true;
@@ -346,12 +348,13 @@ double solution::evalPath() {
 void solution::printgrid(bool log){
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
-			if(!log) printf(grid[i][j] ? "*" : " ");
-			else fprintf(stderr, grid[i][j] ? "*" : " ");
+			if(!log) printf(grid[i][j] ? "#" : "\u00B7");
+			else fprintf(stderr, grid[i][j] ? "#" : "\u00B7");
 		}
 		if (!log) printf("\n");
 		else fprintf(stderr, "\n");
 	}
+	if(!log) printf("with %d captors", getCapt());
 	if(!log) printf("\n");
 	else fprintf(stderr, "\n");
 }
@@ -359,6 +362,15 @@ void solution::printgrid(bool log){
 void solution::loss() {
 	value = getCapt() + pow(size, 2) * (2 - allCover() - allCommunicate() + evalCover() + evalPath());
 	//value = getCapt();
+}
+
+void solution::setGridVal(int i, int j, bool v){
+	if(grid[i][j] && !v){
+		removeCaptor(make_pair(i, j));
+	}
+	if(!grid[i][j] && v){
+		addCaptor(make_pair(i, j));
+	}
 }
 
 solution& solution::operator=(const solution& other){
