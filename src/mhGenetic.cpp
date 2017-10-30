@@ -46,15 +46,8 @@ void mhGenetic::updatePool(int number) {
 }
 
 void mhGenetic::sortPool() {
-	for (int i = 0; i < pool.size(); i++){
-		cout << pool[i].value << " ";
-	}
 	sort(pool.begin(), pool.end());
 	pool.resize(poolsize);
-	cout << endl;
-	for (int i = 0; i < pool.size(); i++) {
-		cout << pool[i].value << " ";
-	}
 }
 
 void mhGenetic::generateBinaryMask() {

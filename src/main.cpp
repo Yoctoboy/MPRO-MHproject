@@ -22,7 +22,7 @@ int main(){
 	srand(time(NULL));
 	int size = 10, Rcap = 1, Rcom = 1;
 	puts("initializing m");
-	mhGenetic m = mhGenetic(5, Rcap, Rcom, size);
+	mhGenetic m = mhGenetic(10, Rcap, Rcom, size);
 	m.generateBinaryMask();
 	puts("m initialized");
 	/*pair<solution, solution> t = m.breed(m.pool[0], m.pool[1]);
@@ -36,7 +36,18 @@ int main(){
 	puts("DAUGTHER");
 	t.second.printgrid();
 	printf("with %d captors\n", t.first.getCapt());*/
-	m.updatePool(15);
+	for (int t = 0; t < 200000; t++) {
+		m.updatePool(15);
+		if (t % 20000 == t / 20000) {
+			cout << t/2000 << endl;
+			m.pool[0].printgrid();
+		}
+	}
+	int count = 0;
+	for (int t = 0; t < m.getPoolsize(); t++) {
+		count += m.pool[t].getCapt();
+	}
+	cout << "mean captors " << count / m.getPoolsize() << endl;
 	//m.launchMH(1);
 
 	//s.printgrid(false);
