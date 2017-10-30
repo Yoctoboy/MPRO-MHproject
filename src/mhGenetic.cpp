@@ -80,9 +80,9 @@ pair<solution, solution> mhGenetic::breed(solution sm, solution sp){
 	solution s2 = sp;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			if (mask[i][j] == 1) {
-				s2.setGridVal(i, j, sm.getGridVal(i, j));
+			if (mask[i][j] == 0) {
 				s1.setGridVal(i, j, sp.getGridVal(i, j));
+				s2.setGridVal(i, j, sm.getGridVal(i, j));
 			}
 		}
 	}
