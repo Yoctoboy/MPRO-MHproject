@@ -18,14 +18,14 @@
 #include "mhMigration.h"
 #include "mhGenetic.h"
 
-struct threaddata{
+struct threaddata{ //parameter class for every thread
 	int cap;
 	int com;
 	int size;
 	int maxiter;
 };
 
-void* compute_stuff(void *threadarg){
+void* compute_stuff(void *threadarg){ //method launched for every thread (one instance = one thread)
 	struct threaddata *arg;
 	arg = (struct threaddata *) threadarg;
 	int cap = arg->cap;
@@ -52,6 +52,7 @@ int main(){
 	vector<int> cap = {1, 1, 2, 2, 3, 3};
 	vector<int> com = {1, 2, 2, 3, 3, 4};
 	srand(time(NULL));
+	
 	pthread_t threads[42];
 	struct threaddata td[42];
 	int instance = 0;
@@ -65,7 +66,7 @@ int main(){
 			td[instance].size = sizes[s];
 			td[instance].maxiter = maxiter;
 			int rc = pthread_create(&threads[instance], NULL, compute_stuff, (void *)&td[instance]);
-			if(rc){
+			if(rc){ //thread could not be created
 				printf("Couldn't create thread %d, exiting...\n", instance);
 				exit(-1);
 			}

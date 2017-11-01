@@ -46,6 +46,7 @@ solution::solution(int n, int rcap, int rcom) {
 	loss();
 }
 
+//copy constructor
 solution::solution(const solution &s){
 	size = s.size;
 	Rcap = s.Rcap;
@@ -61,6 +62,7 @@ solution::solution(const solution &s){
 	value = s.value;
 }
 
+//basic constructor with no argument
 solution::solution() {
 	size = 1;
 	Rcap = 0;
@@ -75,6 +77,7 @@ solution::solution() {
 	value = 0;
 }
 
+//constructor creating an instance from a list of captor coordinates
 solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captorsarg) {
 	size = n;
 	Rcap = rcap;
@@ -114,6 +117,7 @@ vector< pair<int, int> > solution::neighbour_transf(int R) {
 	return transf;
 }
 
+//sort the list of captors to in order to compare solutions more easily
 void solution::sortCaptors() {
 	sort(captors.begin(),
 			 captors.end(),
@@ -121,6 +125,7 @@ void solution::sortCaptors() {
 				 return a.first==b.first ? a.second<b.second : a.first < b.first;
 			 });
 }
+
 //return the neighbour at position pos
 void solution::getNeighbour(pair<int, int> pos) {
 	int R = removeCaptor(pos);
@@ -180,12 +185,14 @@ bool solution::allCommunicate(){
 	return found == nbCapteurs;
 }
 
+//returns true iff the solution is realisable
 bool solution::realisable(){
 	bool iscov = allCover();
 	bool iscom = allCommunicate();
 	return (iscov && iscom);
 }
 
+//Method to add a captor on the grid, and update every necessary variable
 bool solution::addCaptor(pair<int, int> pos){
 	if(!grid[pos.first][pos.second]){
 		grid[pos.first][pos.second] = true;
@@ -211,6 +218,7 @@ bool solution::addCaptor(pair<int, int> pos){
 	else return false;
 }
 
+//Method to remove a captor from the grid, and update every necessary variable
 bool solution::removeCaptor(pair<int, int> pos){
 	if(grid[pos.first][pos.second]){
 		grid[pos.first][pos.second] = false;
@@ -309,7 +317,6 @@ void solution::transfConc1() {
 			j0 = j;
 		}
 	}
-
 	this->getNeighbour({ i0,j0 });
 }
 
@@ -345,6 +352,7 @@ double solution::evalPath() {
 	return vmoy/(size*size);
 }
 
+//Print the solution using '#' for a captor, and '·' for an empty target
 void solution::printgrid(bool log){
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
@@ -360,11 +368,13 @@ void solution::printgrid(bool log){
 	else fprintf(stderr, "\n");
 }
 
+//computes loss value
 void solution::loss() {
 	value = getCapt() + pow(size, 2) * (2 - allCover() - allCommunicate() + evalCover() + evalPath());
 	//value = getCapt();
 }
 
+//sets a value on the grid using the adequate methods
 void solution::setGridVal(int i, int j, bool v){
 	if(grid[i][j] && !v){
 		removeCaptor(make_pair(i, j));
@@ -374,6 +384,7 @@ void solution::setGridVal(int i, int j, bool v){
 	}
 }
 
+//custom '=' operator for custom 'solution' class
 solution& solution::operator=(const solution& other){
 	size = other.size;
 	Rcap = other.Rcap;

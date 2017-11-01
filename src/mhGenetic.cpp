@@ -16,6 +16,7 @@
 #include "solution.h"
 #include "init.h"
 
+//basic constructor
 mhGenetic::mhGenetic(int poolsizz, int rcap, int rcom, int sizz){
   poolsize = poolsizz;
   Rcom = rcom;
@@ -27,6 +28,7 @@ mhGenetic::mhGenetic(int poolsizz, int rcap, int rcom, int sizz){
   //breed(pool[0], pool[1]);
 }
 
+//generate initial generation of solutions
 void mhGenetic::generatePool(int initsize){
   for(int i = 0; i < initsize; i++){
 	  pool.push_back(get_initial_solution(size, Rcap, Rcom, true));
@@ -35,6 +37,7 @@ void mhGenetic::generatePool(int initsize){
   sortPool();
 }
 
+//update generation by breeding and selecting best individuals
 void mhGenetic::updatePool(int number, float prop) {
 	int i0, j0;
   pair<solution, solution> result;
@@ -55,15 +58,18 @@ void mhGenetic::updatePool(int number, float prop) {
 	sortPool();
 }
 
+//compare method to sort all the solutions
 bool comp(solution a, solution b){
   return a.getCapt() < b.getCapt();
 }
 
+//sort solutions by the amount of captors they have
 void mhGenetic::sortPool() {
 	sort(pool.begin(), pool.end(), comp);
 	pool.resize(poolsize);
 }
 
+//greedy heuristic to remove as many captors as possible
 void mhGenetic::removeCaptorsFromPool(bool randomized){
   vector< pair<int, int> > cibles;
   for(int i = 0; i < size; i++){
@@ -83,6 +89,7 @@ void mhGenetic::removeCaptorsFromPool(bool randomized){
   }
 }
 
+//generate new random mask for breeding - 0-1 version
 void mhGenetic::generateBinaryMask() {
   mask.clear();
   vector<int> line;
@@ -97,6 +104,7 @@ void mhGenetic::generateBinaryMask() {
 	}
 }
 
+//generate new random mask for breeding - 0-1-2 version
 void mhGenetic::generateMask(float prop){
   mask.clear();
   vector<int> line;
@@ -112,11 +120,12 @@ void mhGenetic::generateMask(float prop){
   for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
       if((float)rand()/RAND_MAX < prop){
-        mask[i][j] = 2;
+        mask[i][j] = 2; //where the mask equals 2, child will have a captor if any of the parents has one
       }
     }
   }
 }
+
 
 solution mhGenetic::mutate(solution s, int k) {
 	for (int i = 0; i < k; i++) {
@@ -127,6 +136,7 @@ solution mhGenetic::mutate(solution s, int k) {
 	return s;
 }
 
+//breed using binary mask
 pair<solution, solution> mhGenetic::breed(solution sm, solution sp){
 	solution s1 = sm;
 	solution s2 = sp;
@@ -141,6 +151,7 @@ pair<solution, solution> mhGenetic::breed(solution sm, solution sp){
 	return { s1, s2 };
 }
 
+//breed using 0-1-2 mask
 pair<solution, solution> mhGenetic::breed2(int a, int b) {
 	solution s1 = pool[a];
 	solution s2 = pool[b];

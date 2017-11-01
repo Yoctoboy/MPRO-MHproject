@@ -15,6 +15,7 @@
 #include "solution.h"
 #include "init.h"
 
+//greedy heuristic that greedily removes captors as long as it can, from an initially full grid
 solution get_initial_solution(int size, int rcap, int rcom, bool randomized){
   clock_t t = clock();
   solution sol = solution(size, rcap, rcom);
