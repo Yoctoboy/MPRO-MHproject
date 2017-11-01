@@ -399,3 +399,13 @@ solution& solution::operator=(const solution& other){
 	value = other.value;
 	return *this;
 }
+
+//Mutation
+void solution::mutate(int k) {
+	for (int n = 0; n < k; n++) {
+		double alea = rand();
+		if (alea < 0.5) {
+			transf1();
+		}
+	}
+}
