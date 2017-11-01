@@ -18,14 +18,16 @@
 #include "mhMigration.h"
 #include "mhGenetic.h"
 
-struct threaddata{ //parameter class for every thread
+//parameter class for every thread
+struct threaddata{
 	int cap;
 	int com;
 	int size;
 	int maxiter;
 };
 
-void* compute_stuff(void *threadarg){ //method launched for every thread (one instance = one thread)
+//method launched for every thread (one instance = one thread)
+void* compute_stuff(void *threadarg){
 	struct threaddata *arg;
 	arg = (struct threaddata *) threadarg;
 	int cap = arg->cap;
