@@ -388,3 +388,11 @@ solution& solution::operator=(const solution& other){
 	value = other.value;
 	return *this;
 }
+
+void solution::mutate(int k, float p) {
+	for (int n = 0; n < k; n++) {
+		if (rand() < p) {
+			transf1();
+		}
+	}
+}

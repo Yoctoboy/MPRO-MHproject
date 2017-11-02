@@ -34,7 +34,7 @@ void mhGenetic::generatePool(int initsize){
   sortPool();
 }
 
-void mhGenetic::updatePool(int number, float prop) {
+void mhGenetic::updatePool(int number, float prop, int it) {
 	int i0, j0;
   pair<solution, solution> result;
 	for (int k = 0; k < number; k++) {
@@ -44,11 +44,13 @@ void mhGenetic::updatePool(int number, float prop) {
     while(j0==i0) j0 = rand() % poolsize;
 		result = breed2(i0, j0);
 		if(result.first.realisable()){
-      pool.push_back(result.first);
-    }
+			result.first.mutate(size*size / (10*(it+1)), 0.2);
+			pool.push_back(result.first);
+		}
 		if(result.second.realisable()){
-      pool.push_back(result.second);
-    }
+			result.second.mutate(size*size / (10*(it+1)), 0.2);
+			pool.push_back(result.second);
+		}
 	}
   removeCaptorsFromPool(true);
 	sortPool();
@@ -115,15 +117,6 @@ void mhGenetic::generateMask(float prop){
       }
     }
   }
-}
-
-solution mhGenetic::mutate(solution s, int k) {
-	for (int i = 0; i < k; i++) {
-		int X = rand() % size;
-		int Y = rand() % size;
-		s.getNeighbour({ X,Y });
-	}
-	return s;
 }
 
 pair<solution, solution> mhGenetic::breed(solution sm, solution sp){
