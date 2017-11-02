@@ -38,9 +38,9 @@ void* compute_stuff(void *threadarg){
 	m.generateBinaryMask();
 	for(int iter = 0; iter < maxiter ; iter++){
 		printf("Size %dx%d - Rcap = %d - Rcom = %d // Iteration %d/%d - BEST = %d\n", s, s, cap, com, iter+1, maxiter, m.pool[0].getCapt());
-		if(iter%10 == 0) m.updatePool(10, 0.8);
-		else if(iter%5 == 0) m.updatePool(10, 0.6);
-		else m.updatePool(10, 0.15);
+		if(iter%10 == 0) m.updatePool(10, 0.8, iter);
+		else if(iter%5 == 0) m.updatePool(10, 0.6, iter);
+		else m.updatePool(10, 0.15, iter);
 	}
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
