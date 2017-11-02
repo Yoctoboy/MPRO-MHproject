@@ -18,6 +18,8 @@
 #include "mhMigration.h"
 #include "mhGenetic.h"
 
+int totalCaptors;
+
 //parameter class for every thread
 struct threaddata{
 	int cap;
@@ -45,6 +47,9 @@ void* compute_stuff(void *threadarg){
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
 	m.pool[0].printgrid(true);
+	totalCaptors += m.pool[0].getCapt();
+	fprintf(stderr, "Total amount of captors : %d\n", totalCaptors);
+	printf("Total amount of captors : %d\n", totalCaptors);
 	pthread_exit(NULL);
 }
 
@@ -59,6 +64,7 @@ int main(){
 	struct threaddata td[42];
 	int instance = 0;
 	int maxiter = 40;
+	totalCaptors = 0;
 
 	fprintf(stderr, "Iterations per instance: %d\n\n", maxiter);
 	for(int s = 0; s < sizes.size(); s++){
