@@ -33,7 +33,6 @@ void mhGenetic::generatePool(int initsize){
   for(int i = 0; i < initsize; i++){
 	  pool.push_back(get_initial_solution(size, Rcap, Rcom, true));
   }
-  printf("\n");
   sortPool();
 }
 
