@@ -14,7 +14,7 @@ public:
 
   mhGenetic(int,int,int,int);
   void generatePool(int);
-  void updatePool(int, float);
+  void updatePool(int, float, int);
   void sortPool();
   void removeCaptorsFromPool(bool);
   void generateBinaryMask();

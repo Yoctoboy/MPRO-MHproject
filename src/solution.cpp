@@ -409,3 +409,11 @@ void solution::mutate(int k) {
 		}
 	}
 }
+
+void solution::mutate(int k, float p) {
+    for (int n = 0; n < k; n++) {
+        if (rand() < p) {
+            transf1();
+        }
+    }
+}

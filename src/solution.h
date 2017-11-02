@@ -41,6 +41,7 @@ public:
 	vector<pair<int, int> > getTransf_capt() {return transf_capt;};
 	vector<pair<int, int> > getTransf_com() {return transf_com;};
 	void mutate(int);
+	void mutate(int, float);
 
 	solution& operator=(const solution& other);
 	bool operator<(const  solution & other) { return value < other.value; }

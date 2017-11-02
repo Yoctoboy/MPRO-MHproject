@@ -38,26 +38,26 @@ void mhGenetic::generatePool(int initsize){
 }
 
 //update generation by breeding and selecting best individuals
-void mhGenetic::updatePool(int number, float prop) {
-	int i0, j0;
+void mhGenetic::updatePool(int number, float prop, int it) {
+    int i0, j0;
   pair<solution, solution> result;
-	for (int k = 0; k < number; k++) {
+    for (int k = 0; k < number; k++) {
     generateMask(prop);
-		i0 = rand() % poolsize;
-		j0 = rand() % poolsize;
+        i0 = rand() % poolsize;
+        j0 = rand() % poolsize;
     while(j0==i0) j0 = rand() % poolsize;
-		result = breed2(i0, j0);
-		if(result.first.realisable()){
-			result.first.mutate(size*size / 10);
-			pool.push_back(result.first);
-	    }
-		if(result.second.realisable()){
-			result.second.mutate(size*size / 10);
-			pool.push_back(result.second);
-		}
-	}
+        result = breed2(i0, j0);
+        if(result.first.realisable()){
+            result.first.mutate(size*size / (10*(it+1)), 0.2);
+            pool.push_back(result.first);
+        }
+        if(result.second.realisable()){
+            result.second.mutate(size*size / (10*(it+1)), 0.2);
+            pool.push_back(result.second);
+        }
+    }
   removeCaptorsFromPool(true);
-	sortPool();
+    sortPool();
 }
 
 //compare method to sort all the solutions

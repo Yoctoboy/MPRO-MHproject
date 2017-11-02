@@ -40,7 +40,7 @@ void* compute_stuff(void *threadarg){
 		printf("Size %dx%d - Rcap = %d - Rcom = %d // Iteration %d/%d - BEST = %d\n", s, s, cap, com, iter+1, maxiter, m.pool[0].getCapt());
 		if(iter%10 == 0) m.updatePool(10, 0.8);
 		else if(iter%5 == 0) m.updatePool(10, 0.6);
-		else m.updatePool(10, 0.2);
+		else m.updatePool(10, 0.15);
 	}
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
@@ -58,7 +58,7 @@ int main(){
 	pthread_t threads[42];
 	struct threaddata td[42];
 	int instance = 0;
-	int maxiter = 15;
+	int maxiter = 40;
 
 	fprintf(stderr, "Iterations per instance: %d\n\n", maxiter);
 	for(int s = 0; s < sizes.size(); s++){
