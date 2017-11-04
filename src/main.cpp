@@ -60,9 +60,9 @@ void* compute_stuff(void *threadarg){
 	int curBest = 2000, bestsince = 0;
 	for(int iter = 0; iter < maxiter ; iter++){
 		printf("Size %dx%d - Rcap = %d - Rcom = %d // Iteration %d/%d - BEST = %d\n", s, s, cap, com, iter+1, maxiter, m.pool[0].getCapt());
-		if(iter%10 == 0) m.updatePool(15, 0.8, s/10, iter-bestsince > 5 ? 2 : 0);
-		else if(iter%5 == 0) m.updatePool(15, 0.6, s/10, iter-bestsince > 5 ? 2 : 0);
-		else m.updatePool(15, 0.15, s/10, iter-bestsince > 5 ? 2 : 0);
+		if(iter%10 == 0) m.updatePool(15, 0.8, s/10, iter-bestsince >= 5 ? 2 : 0);
+		else if(iter%5 == 0) m.updatePool(15, 0.6, s/10, iter-bestsince >= 5 ? 2 : 0);
+		else m.updatePool(15, 0.15, s/10, iter-bestsince >= 5 ? 2 : 0);
 		if(m.pool[0].getCapt() < curBest){
 			curBest = m.pool[0].getCapt();
 			bestsince = iter;
@@ -71,9 +71,9 @@ void* compute_stuff(void *threadarg){
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
 	float strength = ((float)m.pool[0].getCapt()*(pow(cap*com, 0.7)) /(s*s));
+	totalStrength += strength;
 	fprintf(stderr, "Strength of solution : %lf\n",  strength);
 	m.pool[0].printgrid(true);
-	totalStrength += strength;
 	threadsStatus[id] = true;
 	pthread_exit(NULL);
 }

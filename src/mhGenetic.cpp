@@ -57,6 +57,8 @@ void mhGenetic::updatePool(int number, float prop, int it, int addSolutions) {
   }
   removeCaptorsFromPool(true);
   sortPool();
+  pool.resize(poolsize - addSolutions);
+  for(int i = 0; i < addSolutions; i++) pool.push_back(get_initial_solution(size, Rcap, Rcom, true));
 }
 
 //compare method to sort all the solutions
