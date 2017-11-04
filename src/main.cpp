@@ -38,9 +38,11 @@ struct threaddata{
 	int maxiter;
 };
 
+//check if all threads are over so we can print final result
 void* check_finished(void *checkarg){
-	while(!allThreadsOver()){this_thread::sleep_for(std::chrono::seconds((unsigned long long)1));}
-	printf("totalStrength = %lf\n", totalStrength);
+	while(!allThreadsOver()){this_thread::sleep_for(std::chrono::seconds(1));}
+	printf("Total Strength = %lf\n", totalStrength);
+	fprintf(stderr, "Total Strength = %lf\n", totalStrength);
 	pthread_exit(NULL);
 }
 
@@ -63,10 +65,10 @@ void* compute_stuff(void *threadarg){
 	}
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
+	fprintf(stderr, "Strength of solution : %lf\n",  strength);
 	m.pool[0].printgrid(true);
 	float strength = ((float)m.pool[0].getCapt()*(pow(cap*com, 0.7)) /(s*s));
 	totalStrength += strength;
-	fprintf(stderr, "Strength of solution : %lf - total strength : %lf\n",  strength, totalStrength);
 	threadsStatus[id] = true;
 	pthread_exit(NULL);
 }
@@ -81,17 +83,16 @@ int main(){
 	pthread_t threads[43];
 	struct threaddata td[42];
 	int instance = 0;
-	int maxiter = 10;
+	//int maxiter = 10;
 	totalStrength = 0;
 
-	fprintf(stderr, "Iterations per instance: %d\n\n", maxiter);
 	for(int s = 0; s < sizes.size(); s++){
 		for(int ca = 0; ca < cap.size(); ca++){
 			td[instance].id = instance;
 			td[instance].cap = cap[ca];
 			td[instance].com = com[ca];
 			td[instance].size = sizes[s];
-			td[instance].maxiter = maxiter;
+			td[instance].maxiter = 2*size;
 			int rc = pthread_create(&threads[instance], NULL, compute_stuff, (void *)&td[instance]);
 			if(rc){ //thread could not be created
 				printf("Couldn't create thread %d, exiting...\n", instance);
