@@ -46,7 +46,7 @@ void* check_finished(void *checkarg){
 	pthread_exit(NULL);
 }
 
-//method launched for every thread (one instance = one thread)
+//executed method for every thread (one instance = one thread)
 void* compute_stuff(void *threadarg){
 	struct threaddata *arg;
 	arg = (struct threaddata *) threadarg;
@@ -60,6 +60,7 @@ void* compute_stuff(void *threadarg){
 	int curBest = 2000, bestsince = 0;
 	for(int iter = 0; iter < maxiter ; iter++){
 		printf("Size %dx%d - Rcap = %d - Rcom = %d // Iteration %d/%d - BEST = %d\n", s, s, cap, com, iter+1, maxiter, m.pool[0].getCapt());
+		if(iter-bestsince >= 5) printf("ADDING SOME INIT SOL\n");
 		if(iter%10 == 0) m.updatePool(20, 0.7, iter, iter-bestsince >= 5 ? 5 : 0);
 		else if(iter%5 == 0) m.updatePool(20, 0.5, iter, iter-bestsince >= 5 ? 5 : 0);
 		else m.updatePool(20, 0.1, iter, iter-bestsince >= 5 ? 5 : 0);
@@ -74,7 +75,7 @@ void* compute_stuff(void *threadarg){
 	totalStrength += strength;
 	fprintf(stderr, "Strength of solution : %lf\n",  strength);
 	m.pool[0].printgrid(true);
-	threadsStatus[id] = true;
+	threadsStatus[id] = true; //thread is over
 	pthread_exit(NULL);
 }
 

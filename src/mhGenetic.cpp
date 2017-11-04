@@ -42,16 +42,16 @@ void mhGenetic::updatePool(int number, float prop, int it, int addSolutions) {
   pair<solution, solution> result;
   for (int k = 0; k < number; k++) {
     generateMask(prop);
-    i0 = rand() % poolsize;
-    j0 = rand() % poolsize;
+    i0 = rand() % (int)pool.size();
+    j0 = rand() % (int)pool.size();
     while(j0==i0) j0 = rand() % poolsize;
     result = breed2(i0, j0);
     if(result.first.realisable()){
-      result.first.mutateadd(1);
+      result.first.mutateadd(rand()%2==1 ? 1 : 0);
       pool.push_back(result.first);
     }
     if(result.second.realisable()){
-      result.second.mutateadd(1);
+      result.second.mutateadd(rand()%2==1 ? 1 : 0);
       pool.push_back(result.second);
     }
   }
