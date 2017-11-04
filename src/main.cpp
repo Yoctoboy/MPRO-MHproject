@@ -113,7 +113,7 @@ int main(){
 			td[instance].cap = cap[ca];
 			td[instance].com = com[ca];
 			td[instance].size = sizes[s];
-			td[instance].maxiter = 3;
+			td[instance].maxiter = 5*sizes[s];
 			int rc = pthread_create(&threads[instance], NULL, compute_instance, (void *)&td[instance]);
 			if(rc){ //thread could not be created
 				printf("Couldn't create thread %d, exiting...\n", instance);
