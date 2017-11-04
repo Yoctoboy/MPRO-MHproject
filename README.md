@@ -7,7 +7,7 @@ Projet de Métaheuristiques dans le cadre du Master 2 de Recherche Opérationnel
 -Alexis Reymann (Télécom ParisTech)<br />
 -Madeline Fleury (Ecole des Ponts ParisTech)<br />
 
-### EXECUTER LE PROGRAMME : <br />
+### EXECUTER LE PROGRAMME :<br />
 
 Nous n'avons pas implementé le multithread en mode de compatibilité pour Visual Studio. Nous vous conseillons donc de compiler notre programme sur un ordinateur fonctionnant sous Linux ou sous une machine virtuelle Linux.<br />
 

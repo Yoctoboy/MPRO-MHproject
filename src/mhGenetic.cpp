@@ -47,11 +47,11 @@ void mhGenetic::updatePool(int number, float prop, int it, int addSolutions) {
     while(j0==i0) j0 = rand() % poolsize;
     result = breed2(i0, j0);
     if(result.first.realisable()){
-      result.first.mutate(size*size / (10*(it+1)), 0.7);
+      result.first.mutate(size/10, 0.7);
       pool.push_back(result.first);
     }
     if(result.second.realisable()){
-      result.second.mutate(size*size / (10*(it+1)), 0.7);
+      result.second.mutate(size/10, 0.7);
       pool.push_back(result.second);
     }
   }
