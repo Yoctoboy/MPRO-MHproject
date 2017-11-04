@@ -11,27 +11,44 @@
 #include <queue>
 #include <climits>
 #include <ctime>
+#include <chrono>
 #include <pthread.h>
+#include <thread>
+#include <unistd.h>
 #include "solution.h"
 #include "mhAlea.h"
 #include "init.h"
 #include "mhMigration.h"
 #include "mhGenetic.h"
 
-int totalCaptors;
+float totalStrength;
+vector<bool> threadsStatus; //true if over, else false
+
+bool allThreadsOver(){
+	for(int i = 0; i < (int)threadsStatus.size(); i++) if(!threadsStatus[i]) return false;
+	return true;
+}
 
 //parameter class for every thread
 struct threaddata{
+	int id;
 	int cap;
 	int com;
 	int size;
 	int maxiter;
 };
 
+void* check_finished(void *checkarg){
+	while(!allThreadsOver()){this_thread::sleep_for(std::chrono::seconds((unsigned long long)1));}
+	printf("totalStrength = %lf\n", totalStrength);
+	pthread_exit(NULL);
+}
+
 //method launched for every thread (one instance = one thread)
 void* compute_stuff(void *threadarg){
 	struct threaddata *arg;
 	arg = (struct threaddata *) threadarg;
+	int id = arg->id;
 	int cap = arg->cap;
 	int com = arg->com;
 	int s = arg->size;
@@ -47,9 +64,10 @@ void* compute_stuff(void *threadarg){
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
 	m.pool[0].printgrid(true);
-	totalCaptors += m.pool[0].getCapt();
-	fprintf(stderr, "Total amount of captors : %d\n", totalCaptors);
-	printf("Total amount of captors : %d\n", totalCaptors);
+	float strength = ((float)m.pool[0].getCapt()*(pow(cap*com, 0.7)) /(s*s));
+	totalStrength += strength;
+	fprintf(stderr, "Strength of solution : %lf - total strength : %lf\n",  strength, totalStrength);
+	threadsStatus[id] = true;
 	pthread_exit(NULL);
 }
 
@@ -59,16 +77,17 @@ int main(){
 	vector<int> cap = {1, 1, 2, 2, 3, 3};
 	vector<int> com = {1, 2, 2, 3, 3, 4};
 	srand(time(NULL));
-	
-	pthread_t threads[42];
+
+	pthread_t threads[43];
 	struct threaddata td[42];
 	int instance = 0;
-	int maxiter = 40;
-	totalCaptors = 0;
+	int maxiter = 10;
+	totalStrength = 0;
 
 	fprintf(stderr, "Iterations per instance: %d\n\n", maxiter);
 	for(int s = 0; s < sizes.size(); s++){
 		for(int ca = 0; ca < cap.size(); ca++){
+			td[instance].id = instance;
 			td[instance].cap = cap[ca];
 			td[instance].com = com[ca];
 			td[instance].size = sizes[s];
@@ -79,8 +98,10 @@ int main(){
 				exit(-1);
 			}
 			instance++;
+			threadsStatus.push_back(false);
 		}
 	}
+	pthread_create(&threads[42], NULL, check_finished, (void *) 0);
 	pthread_exit(NULL);
 	return 0;
 }
