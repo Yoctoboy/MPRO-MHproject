@@ -65,16 +65,16 @@ void* compute_instance(void *threadarg){
 	int com = arg->com;
 	int s = arg->size;
 	int maxiter = arg->maxiter;
-	mhGenetic m = mhGenetic(15, cap, com, s);
+	mhGenetic m = mhGenetic(25, cap, com, s);
 	m.generateBinaryMask();
 	int curBest = 2000, bestsince = 0;
 	if(s == 30 && cap == 1 && com == 1) vdisp.push_back(m.pool[0].getCapt());
 	for(int iter = 0; iter < maxiter ; iter++){
-		printf("Size %dx%d - Rcap = %d - Rcom = %d // Iteration %d/%d - BEST = %d\n", s, s, cap, com, iter+1, maxiter, m.pool[0].getCapt());
-		if(iter%10 == 0) m.updatePool(20, 0.8, iter, iter-bestsince >= 5 ? 5 : 0);
-		else if(iter%5 == 0) m.updatePool(20, 0.6, iter, iter-bestsince >= 5 ? 5 : 0);
-		else m.updatePool(20, 0.15, iter, iter-bestsince >= 5 ? 5 : 0);
+		if(iter%10 == 0) m.updatePool(50, 0.8, iter, iter-bestsince >= 5 ? 5 : 0);
+		else if(iter%5 == 0) m.updatePool(50, 0.6, iter, iter-bestsince >= 5 ? 5 : 0);
+		else m.updatePool(50, 0.15, iter, iter-bestsince >= 5 ? 5 : 0);
 		if(m.pool[0].getCapt() < curBest){
+			printf("Size %dx%d - Rcap = %d - Rcom = %d // Iteration %d/%d - BEST = %d\n", s, s, cap, com, iter+1, maxiter, m.pool[0].getCapt());
 			curBest = m.pool[0].getCapt();
 			bestsince = iter;
 		}
