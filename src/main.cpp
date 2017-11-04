@@ -55,19 +55,24 @@ void* compute_stuff(void *threadarg){
 	int com = arg->com;
 	int s = arg->size;
 	int maxiter = arg->maxiter;
-	mhGenetic m = mhGenetic(10, cap, com, s);
+	mhGenetic m = mhGenetic(15, cap, com, s);
 	m.generateBinaryMask();
+	int curBest = 2000, bestsince = 0;
 	for(int iter = 0; iter < maxiter ; iter++){
 		printf("Size %dx%d - Rcap = %d - Rcom = %d // Iteration %d/%d - BEST = %d\n", s, s, cap, com, iter+1, maxiter, m.pool[0].getCapt());
-		if(iter%10 == 0) m.updatePool(10, 0.8, iter);
-		else if(iter%5 == 0) m.updatePool(10, 0.6, iter);
-		else m.updatePool(10, 0.15, iter);
+		if(iter%10 == 0) m.updatePool(15, 0.8, s/10, iter-bestsince > 5 ? 2 : 0);
+		else if(iter%5 == 0) m.updatePool(15, 0.6, s/10, iter-bestsince > 5 ? 2 : 0);
+		else m.updatePool(15, 0.15, s/10, iter-bestsince > 5 ? 2 : 0);
+		if(m.pool[0].getCapt() < curBest){
+			curBest = m.pool[0].getCapt();
+			bestsince = iter;
+		}
 	}
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
-	fprintf(stderr, "Strength of solution : %lf\n",  totalStrength);
-	m.pool[0].printgrid(true);
 	float strength = ((float)m.pool[0].getCapt()*(pow(cap*com, 0.7)) /(s*s));
+	fprintf(stderr, "Strength of solution : %lf\n",  strength);
+	m.pool[0].printgrid(true);
 	totalStrength += strength;
 	threadsStatus[id] = true;
 	pthread_exit(NULL);
