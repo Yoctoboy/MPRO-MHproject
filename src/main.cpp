@@ -60,9 +60,9 @@ void* compute_stuff(void *threadarg){
 	int curBest = 2000, bestsince = 0;
 	for(int iter = 0; iter < maxiter ; iter++){
 		printf("Size %dx%d - Rcap = %d - Rcom = %d // Iteration %d/%d - BEST = %d\n", s, s, cap, com, iter+1, maxiter, m.pool[0].getCapt());
-		if(iter%10 == 0) m.updatePool(15, 0.8, iter, iter-bestsince >= 5 ? 2 : 0);
-		else if(iter%5 == 0) m.updatePool(15, 0.6, iter, iter-bestsince >= 5 ? 2 : 0);
-		else m.updatePool(15, 0.15, iter, iter-bestsince >= 5 ? 2 : 0);
+		if(iter%10 == 0) m.updatePool(20, 0.7, iter, iter-bestsince >= 5 ? 5 : 0);
+		else if(iter%5 == 0) m.updatePool(20, 0.5, iter, iter-bestsince >= 5 ? 5 : 0);
+		else m.updatePool(20, 0.1, iter, iter-bestsince >= 5 ? 5 : 0);
 		if(m.pool[0].getCapt() < curBest){
 			curBest = m.pool[0].getCapt();
 			bestsince = iter;
@@ -97,7 +97,7 @@ int main(){
 			td[instance].cap = cap[ca];
 			td[instance].com = com[ca];
 			td[instance].size = sizes[s];
-			td[instance].maxiter = 2*sizes[s];
+			td[instance].maxiter = 50;
 			int rc = pthread_create(&threads[instance], NULL, compute_stuff, (void *)&td[instance]);
 			if(rc){ //thread could not be created
 				printf("Couldn't create thread %d, exiting...\n", instance);

@@ -416,3 +416,14 @@ void solution::mutate(int k, float p) {
         }
     }
 }
+
+void solution::mutateadd(int n){
+	int i0, j0;
+	for(int i = 0; i < n; i++){
+		do{
+			i0 = rand() % size;
+			j0 = rand() % size;
+		} while(grid[i0][j0]);
+		addCaptor(make_pair(i0, j0));
+	}
+}
