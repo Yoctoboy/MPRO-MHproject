@@ -65,7 +65,7 @@ void* compute_stuff(void *threadarg){
 	}
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
-	fprintf(stderr, "Strength of solution : %lf\n",  strength);
+	fprintf(stderr, "Strength of solution : %lf\n",  totalStrength);
 	m.pool[0].printgrid(true);
 	float strength = ((float)m.pool[0].getCapt()*(pow(cap*com, 0.7)) /(s*s));
 	totalStrength += strength;
@@ -92,7 +92,7 @@ int main(){
 			td[instance].cap = cap[ca];
 			td[instance].com = com[ca];
 			td[instance].size = sizes[s];
-			td[instance].maxiter = 2*size;
+			td[instance].maxiter = 2*sizes[s];
 			int rc = pthread_create(&threads[instance], NULL, compute_stuff, (void *)&td[instance]);
 			if(rc){ //thread could not be created
 				printf("Couldn't create thread %d, exiting...\n", instance);
