@@ -11,11 +11,13 @@ Projet de Métaheuristiques dans le cadre du Master 2 de Recherche Opérationnel
 
 Nous n'avons pas implementé le multithread en mode de compatibilité pour Visual Studio. Nous vous conseillons donc de compiler notre programme sur un ordinateur fonctionnant sous Linux ou sous une machine virtuelle Linux.<br />
 
+
 Pour compiler le code :<br />
 `$ make -B`
 
 Pour exécuter le code :<br />
 `$ ./mh_fleury_reymann`
+
 
 ### INFORMATIONS :<br />
 
