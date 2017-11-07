@@ -7,8 +7,6 @@ using namespace std;
 
 class solution {
 public:
-	int getCapt() { return nbCapteurs; }
-	int getSize() { return size; }
 	vector<vector<int> > cover;
 	vector<vector<int> > com;
 	vector< pair<int, int> > captors;
@@ -27,7 +25,6 @@ public:
 	bool addCaptor(pair<int, int>);
 	bool removeCaptor(pair<int, int>);
 	void updateCover();
-	void updateCom();
 	void transf1();
 	void remove1();
 	void transfConc1();
@@ -46,6 +43,9 @@ public:
 
 	solution& operator=(const solution& other);
 	bool operator<(const  solution & other) { return value < other.value; }
+
+	int getCapt() { return nbCapteurs; }
+	int getSize() { return size; }
 
 private:
 	int size;

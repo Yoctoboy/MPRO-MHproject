@@ -11,11 +11,11 @@ Projet de Métaheuristiques dans le cadre du Master 2 de Recherche Opérationnel
 
 Nous n'avons pas implementé le multithread en mode de compatibilité pour Visual Studio. Nous vous conseillons donc de compiler notre programme sur un ordinateur fonctionnant sous Linux ou sous une machine virtuelle Linux.<br />
 
-Pour compiler le code :
+Pour compiler le code :<br />
 `$ make -B`
 
-Pour exécuter le code :
-`$ ./a`
+Pour exécuter le code :<br />
+`$ ./mh_fleury_reymann`
 
 ### INFORMATIONS :<br />
 
@@ -24,4 +24,6 @@ Le programme affiche également des informations dans la console : Le nombre d'i
 
 ### TROUBLESHOOTING :<br />
 
-Coming soon...
+Si le code ne compile pas : Mettez à jour votre version de g++ (5.4.0)
+Si le code s'execute mais ne peut créer tous les threads : Executez le programme sur un ordinateur plus puissant.
+Si le problème persiste : Contactez l'un des participants au projet (mad2fleury@gmail.com ou alexis.reymann@telecom-paristech.fr)

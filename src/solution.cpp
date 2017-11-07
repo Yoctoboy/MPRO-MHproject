@@ -13,10 +13,7 @@
 #include <climits>
 #include <queue>
 
-#define FOR(i, a, b) for (int i = (a); i < (b); i++)
-#define REP(i, n) FOR(i, 0, n)
-
-//constructor : create the grid nxn with captors everywhere
+//constructor: create the grid nxn with captors everywhere
 solution::solution(int n, int rcap, int rcom) {
 	size = n;
 	Rcap = rcap;
@@ -41,6 +38,33 @@ solution::solution(int n, int rcap, int rcom) {
 		}
 	}
 	grid[0][0] = false;
+	transf_capt = neighbour_transf(Rcap);
+	transf_com = neighbour_transf(Rcom);
+	loss();
+}
+
+//constructor creating an instance from a list of captor coordinates
+solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captorsarg) {
+	size = n;
+	Rcap = rcap;
+	Rcom = rcom;
+	captors = captorsarg;
+	nbCapteurs = captors.size();
+	vector<bool> intermediate;
+	vector<int> intermediate1;
+	for (int i = 0; i < n; i++) {
+		intermediate.push_back(false);
+		intermediate1.push_back(0);
+	}
+	grid.clear();
+	for (int i = 0; i < n; i++){
+		grid.push_back(intermediate);
+		cover.push_back(intermediate1);
+		com.push_back(intermediate1);
+	}
+	for(int i = 0; i < captors.size(); i++){
+		grid[captors[i].first][captors[i].second] = true;
+	}
 	transf_capt = neighbour_transf(Rcap);
 	transf_com = neighbour_transf(Rcom);
 	loss();
@@ -77,33 +101,6 @@ solution::solution() {
 	value = 0;
 }
 
-//constructor creating an instance from a list of captor coordinates
-solution::solution(int n, int rcap, int rcom, vector< pair<int, int> > captorsarg) {
-	size = n;
-	Rcap = rcap;
-	Rcom = rcom;
-	captors = captorsarg;
-	nbCapteurs = captors.size();
-	vector<bool> intermediate;
-	vector<int> intermediate1;
-	for (int i = 0; i < n; i++) {
-		intermediate.push_back(false);
-		intermediate1.push_back(0);
-	}
-	grid.clear();
-	for (int i = 0; i < n; i++){
-		grid.push_back(intermediate);
-		cover.push_back(intermediate1);
-		com.push_back(intermediate1);
-	}
-	for(int i = 0; i < captors.size(); i++){
-		grid[captors[i].first][captors[i].second] = true;
-	}
-	transf_capt = neighbour_transf(Rcap);
-	transf_com = neighbour_transf(Rcom);
-	loss();
-}
-
 //calculates all possible transformation given a radius R
 vector< pair<int, int> > solution::neighbour_transf(int R) {
 	vector< pair<int, int> > transf;
@@ -135,7 +132,7 @@ void solution::getNeighbour(pair<int, int> pos) {
 	loss();
 }
 
-//Finding if sol is realisable (only cover)
+//Finding if every cell is in the radius of a captor
 bool solution::allCover(){
 	updateCover();
 	for(int i = 0; i < cover.size(); i++){
@@ -187,9 +184,8 @@ bool solution::allCommunicate(){
 
 //returns true iff the solution is realisable
 bool solution::realisable(){
-	bool iscov = allCover();
-	bool iscom = allCommunicate();
-	return (iscov && iscom);
+	if(allCover()) return allCommunicate();
+	else return false;
 }
 
 //Method to add a captor on the grid, and update every necessary variable
@@ -203,13 +199,6 @@ bool solution::addCaptor(pair<int, int> pos){
 			int Y = pos.second + transf_capt[t].second;
 			if (X >= 0 && X < size && Y >= 0 && Y < size) {
 				cover[X][Y] ++;
-			}
-		}
-		for (int t = 0; t < transf_com.size(); t++) {
-			int X = pos.first + transf_com[t].first;
-			int Y = pos.second + transf_com[t].second;
-			if (X >= 0 && X < size && Y >= 0 && Y < size && !(X == pos.first && Y == pos.second)) {
-				com[X][Y] ++;
 			}
 		}
 		loss();
@@ -229,13 +218,6 @@ bool solution::removeCaptor(pair<int, int> pos){
 			int Y = pos.second + transf_capt[t].second;
 			if (X >= 0 && X < size && Y >= 0 && Y < size) {
 				cover[X][Y] --;
-			}
-		}
-		for (int t = 0; t < transf_com.size(); t++) {
-			int X = pos.first + transf_com[t].first;
-			int Y = pos.second + transf_com[t].second;
-			if (X >= 0 && X < size && Y >= 0 && Y < size && !(X==pos.first && Y==pos.second)) {
-				com[X][Y] --;
 			}
 		}
 		loss();
@@ -260,29 +242,6 @@ void solution::updateCover() {
 						int Y = j + transf_capt[t].second;
 						if (Y >= 0 && Y < size) {
 							cover[X][Y]++;
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-//Calculate the cover
-void solution::updateCom() {
-	//Get the transformation possible
-	REP(i, transf_com.size()) {
-		//printf("%d %d\n", transf[i].first, transf[i].second);
-	}
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			if (grid[i][j]) {
-				for (int t = 0; t < transf_capt.size(); t++) {
-					int X = i + transf_capt[t].first;
-					if (X >= 0 && X < size) {
-						int Y = j + transf_capt[t].second;
-						if (Y >= 0 && Y < size && !(X == i && Y == j)) {
-							com[X][Y]++;
 						}
 					}
 				}
@@ -384,22 +343,6 @@ void solution::setGridVal(int i, int j, bool v){
 	}
 }
 
-//custom '=' operator for custom 'solution' class
-solution& solution::operator=(const solution& other){
-	size = other.size;
-	Rcap = other.Rcap;
-	Rcom = other.Rcom;
-	cover = other.cover;
-	captors = other.captors;
-	grid = other.grid;
-	com = other.com;
-	nbCapteurs = other.nbCapteurs;
-	transf_com = other.transf_com;
-	transf_capt = other.transf_capt;
-	value = other.value;
-	return *this;
-}
-
 //Mutation
 void solution::mutate(int k) {
 	for (int n = 0; n < k; n++) {
@@ -426,4 +369,21 @@ void solution::mutateadd(int n){
 		} while(grid[i0][j0]);
 		addCaptor(make_pair(i0, j0));
 	}
+}
+
+
+//custom '=' operator for custom 'solution' class
+solution& solution::operator=(const solution& other){
+	size = other.size;
+	Rcap = other.Rcap;
+	Rcom = other.Rcom;
+	cover = other.cover;
+	captors = other.captors;
+	grid = other.grid;
+	com = other.com;
+	nbCapteurs = other.nbCapteurs;
+	transf_com = other.transf_com;
+	transf_capt = other.transf_capt;
+	value = other.value;
+	return *this;
 }

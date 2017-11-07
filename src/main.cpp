@@ -18,24 +18,17 @@
 #include <fstream>
 #include <string>
 #include "solution.h"
-#include "mhAlea.h"
 #include "init.h"
 #include "mhMigration.h"
 #include "mhGenetic.h"
 
-float totalStrength;
 vector<bool> threadsStatus; //true if over, else false
 ofstream outfile;
 
+//checking every second whether the threads are all over
 bool allThreadsOver(){
 	for(int i = 0; i < (int)threadsStatus.size(); i++) if(!threadsStatus[i]) return false;
 	return true;
-}
-
-void writefile(int s, int cap, int com, vector<int> vdisp){
-	outfile << "Size = " << s << " ; Rcap = " << cap << " ; Rcom = " << com << endl;
-	for(int i = 0; i < vdisp.size(); i++) outfile << vdisp[i] << " ";
-	outfile << endl << endl;
 }
 
 //parameter class for every thread
@@ -50,14 +43,11 @@ struct threaddata{
 //check if all threads are over so we can print final result
 void* check_finished(void *checkarg){
 	while(!allThreadsOver()){this_thread::sleep_for(std::chrono::seconds(1));}
-	printf("Total Strength = %lf\n", totalStrength);
-	fprintf(stderr, "Total Strength = %lf\n", totalStrength);
 	pthread_exit(NULL);
 }
 
 //executed method for every thread (one instance = one thread)
 void* compute_instance(void *threadarg){
-	vector<int> vdisp;
 	struct threaddata *arg;
 	arg = (struct threaddata *) threadarg;
 	int id = arg->id;
@@ -65,10 +55,10 @@ void* compute_instance(void *threadarg){
 	int com = arg->com;
 	int s = arg->size;
 	int maxiter = arg->maxiter;
+
 	mhGenetic m = mhGenetic(25, cap, com, s);
 	m.generateBinaryMask();
 	int curBest = 2000, bestsince = 0;
-	if(s == 30 && cap == 1 && com == 1) vdisp.push_back(m.pool[0].getCapt());
 	for(int iter = 0; iter < maxiter ; iter++){
 		if(iter%10 == 0) m.updatePool(50, 0.8, iter, iter-bestsince >= 5 ? 5 : 0);
 		else if(iter%5 == 0) m.updatePool(50, 0.6, iter, iter-bestsince >= 5 ? 5 : 0);
@@ -78,15 +68,9 @@ void* compute_instance(void *threadarg){
 			curBest = m.pool[0].getCapt();
 			bestsince = iter;
 		}
-		vdisp.push_back(curBest);
 	}
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
-	float strength = ((float)m.pool[0].getCapt()*(pow(cap*com, 0.7)) /(s*s));
-	totalStrength += strength;
-	fprintf(stderr, "Strength of solution : %lf\n",  strength);
-
-	writefile(s, cap, com, vdisp);
 
 	m.pool[0].printgrid(true);
 	threadsStatus[id] = true; //thread is over
@@ -104,8 +88,6 @@ int main(){
 	pthread_t threads[43];
 	struct threaddata td[42];
 	int instance = 0;
-	//int maxiter = 10;
-	totalStrength = 0;
 
 	for(int s = 0; s < sizes.size(); s++){
 		for(int ca = 0; ca < cap.size(); ca++){

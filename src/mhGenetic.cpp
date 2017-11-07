@@ -17,11 +17,11 @@
 #include "init.h"
 
 //basic constructor
-mhGenetic::mhGenetic(int poolsizz, int rcap, int rcom, int sizz){
-  poolsize = poolsizz;
-  Rcom = rcom;
-  Rcap = rcap;
-  size = sizz;
+mhGenetic::mhGenetic(int _poolsize, int _Rcap, int _Rcom, int _size){
+  poolsize = _poolsize;
+  Rcom = _Rcom;
+  Rcap = _Rcap;
+  size = _size;
   pool.reserve(poolsize);
   generatePool(poolsize);
   generateMask(0.2);
@@ -47,7 +47,7 @@ void mhGenetic::updatePool(int number, float prop, int it, int addSolutions) {
     while(j0==i0) j0 = rand() % poolsize;
     result = breed2(i0, j0);
     if(result.first.realisable()){
-      result.first.mutateadd(rand()%2==1 ? 1 : 0);
+      result.first.mutateadd(rand()%2==1 ? 1 : 0); //mutate with 50% chance
       pool.push_back(result.first);
     }
     if(result.second.realisable()){
@@ -66,11 +66,7 @@ bool compCapt(solution a, solution b){
   return a.getCapt() < b.getCapt();
 }
 
-bool complol(solution &, solution b){
-  return true;
-}
-
-//sort solutions by the amount of captors they have
+//sort solutions by the amount of captors they have and resize the pool if it's too big
 void mhGenetic::sortPool() {
 	sort(pool.begin(), pool.end(), compCapt);
 	pool.resize(poolsize);
@@ -148,7 +144,7 @@ pair<solution, solution> mhGenetic::breed(solution sm, solution sp){
 	return { s1, s2 };
 }
 
-//breed using 0-1-2 mask
+//breed using 0-1-2 mask, with pool index as parameter
 pair<solution, solution> mhGenetic::breed2(int a, int b) {
 	solution s1 = pool[a];
 	solution s2 = pool[b];

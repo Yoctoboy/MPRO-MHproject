@@ -1,3 +1,4 @@
+#include "init.h"
 #include <iostream>
 #include <stdio.h>
 #include <algorithm>
@@ -13,11 +14,9 @@
 #include <ctime>
 #include <chrono>
 #include "solution.h"
-#include "init.h"
 
-//greedy heuristic that greedily removes captors as long as it can, from an initially full grid
+//heuristic that greedily removes captors as long as it can, from an initially full grid
 solution get_initial_solution(int size, int rcap, int rcom, bool randomized){
-  clock_t t = clock();
   solution sol = solution(size, rcap, rcom);
 
   vector< pair<int, int> > cibles;
@@ -35,7 +34,6 @@ solution get_initial_solution(int size, int rcap, int rcom, bool randomized){
       }
     }
   }
-  t = clock()-t;
   sol.sortCaptors();
   sol.loss();
   return sol;
