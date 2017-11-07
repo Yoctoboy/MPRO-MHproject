@@ -26,6 +26,6 @@ Le programme affiche également des informations dans la console : Le nombre d'i
 
 ### TROUBLESHOOTING :<br />
 
-Si le code ne compile pas : Mettez à jour votre version de g++ (5.4.0)
-Si le code s'execute mais ne peut créer tous les threads : Executez le programme sur un ordinateur plus puissant.
-Si le problème persiste : Contactez l'un des participants au projet (mad2fleury@gmail.com ou alexis.reymann@telecom-paristech.fr)
+Si le code ne compile pas : Mettez à jour votre version de g++ (5.4.0)<br />
+Si le code s'execute mais ne peut créer tous les threads : Executez le programme sur un ordinateur plus puissant.<br />
+Si le problème persiste : Contactez l'un des participants au projet (mad2fleury@gmail.com ou alexis.reymann@telecom-paristech.fr)<br />
