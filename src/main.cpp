@@ -65,6 +65,8 @@ void* compute_instance(void *threadarg){
 		else m.updatePool(50, 0.15, iter, iter-bestsince >= 5 ? 5 : 0);
 		if(m.pool[0].getCapt() < curBest){
 			printf("Size %dx%d - Rcap = %d - Rcom = %d // Iteration %d/%d - BEST = %d\n", s, s, cap, com, iter+1, maxiter, m.pool[0].getCapt());
+			cout << flush;
+			cerr << flush;
 			curBest = m.pool[0].getCapt();
 			bestsince = iter;
 		}
