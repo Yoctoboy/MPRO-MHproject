@@ -70,8 +70,9 @@ void* compute_instance(void *threadarg){
 		}
 	}
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
-	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
+	m.pool[0].printgrid(true);
 
+	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
 	m.pool[0].printgrid(true);
 	threadsStatus[id] = true; //thread is over
 	pthread_exit(NULL);
@@ -80,7 +81,7 @@ void* compute_instance(void *threadarg){
 int main(){
 	outfile.open("Evolution.txt");
 	freopen("log.txt", "w", stderr);
-	vector<int> sizes = {10, 15, 20, 25, 30, 40, 50};
+	vector<int> sizes = {10,15,20,25,30,40,50};
 	vector<int> cap = {1, 1, 2, 2, 3, 3};
 	vector<int> com = {1, 2, 2, 3, 3, 4};
 	srand(time(NULL));
@@ -95,7 +96,7 @@ int main(){
 			td[instance].cap = cap[ca];
 			td[instance].com = com[ca];
 			td[instance].size = sizes[s];
-			td[instance].maxiter = 5*sizes[s];
+			td[instance].maxiter = 15*sizes[s];
 			int rc = pthread_create(&threads[instance], NULL, compute_instance, (void *)&td[instance]);
 			if(rc){ //thread could not be created
 				printf("Couldn't create thread %d, exiting...\n", instance);

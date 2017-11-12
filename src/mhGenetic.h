@@ -19,6 +19,7 @@ public:
   void removeCaptorsFromPool(bool);
   void generateBinaryMask();
   void generateMask(float);
+  void generateMask2(float);
   pair<solution,solution> breed(solution, solution);
   pair<solution,solution> breed2(int, int);
 

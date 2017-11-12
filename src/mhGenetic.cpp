@@ -47,11 +47,11 @@ void mhGenetic::updatePool(int number, float prop, int it, int addSolutions) {
     while(j0==i0) j0 = rand() % poolsize;
     result = breed2(i0, j0);
     if(result.first.realisable()){
-      result.first.mutateadd(rand()%2==1 ? 1 : 0); //mutate with 50% chance
+      //result.first.mutateadd(rand()%2==1 ? 1 : 0); //mutate with 50% chance
       pool.push_back(result.first);
     }
     if(result.second.realisable()){
-      result.second.mutateadd(rand()%2==1 ? 1 : 0);
+      //result.second.mutateadd(rand()%2==1 ? 1 : 0);
       pool.push_back(result.second);
     }
   }
@@ -109,6 +109,23 @@ void mhGenetic::generateBinaryMask() {
 
 //generate new random mask for breeding - 0-1-2 version
 void mhGenetic::generateMask(float prop){
+  mask.clear();
+  vector<int> line;
+  int frontier = (rand() % (size/2)) + (size/4);
+  bool horizon = rand()%2;
+  for (int i = 0; i < size; i++) {
+		line.clear();
+		for (int j = 0; j < size; j++) {
+			if(horizon) line.push_back(abs(j-frontier)<Rcom ? 2 : (j>frontier ? 1 : 0));
+      else line.push_back(abs(i-frontier)<Rcom ? 2 : (i>frontier ? 1 : 0));
+		}
+		mask.push_back(line);
+	}
+}
+
+
+//generate new random mask for breeding - 0-1-2 version
+void mhGenetic::generateMask2(float prop){
   mask.clear();
   vector<int> line;
   int x;
