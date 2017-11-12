@@ -74,7 +74,6 @@ void* compute_instance(void *threadarg){
 	cout << flush;
 
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
-	m.pool[0].printgrid(true);
 	threadsStatus[id] = true; //thread is over
 	pthread_exit(NULL);
 }
