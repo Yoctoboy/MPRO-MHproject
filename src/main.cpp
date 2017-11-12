@@ -71,6 +71,7 @@ void* compute_instance(void *threadarg){
 	}
 	printf("SOLUTION FOUND - Size %dx%d - Rcap = %d - Rcom = %d - CAPT = %d\n", s, s, cap, com, m.pool[0].getCapt());
 	m.pool[0].printgrid(true);
+	cout << flush;
 
 	fprintf(stderr, "Size %dx%d - Rcap = %d - Rcom = %d\n", s, s, cap, com);
 	m.pool[0].printgrid(true);
